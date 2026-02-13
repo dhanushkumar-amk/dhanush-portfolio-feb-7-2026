@@ -11,7 +11,6 @@ import { ThemeToggle } from "./components/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { PomodoroTimer } from "./components/PomodoroTimer";
-import { NeuralNetworkSim } from "./components/NeuralNetworkSim";
 import { ProjectCard } from "./components/ProjectCard";
 import { Terminal } from "./components/Terminal";
 import { StatusBoard } from "./components/StatusBoard";
@@ -256,6 +255,7 @@ export default function Home() {
                 />
               ))}
             </motion.div>
+
           </>
         )}
       </AnimatePresence>
@@ -295,20 +295,40 @@ export default function Home() {
             {/* Profile Image - Easter Egg Trigger */}
             <button
               onClick={() => setShowEasterEgg(!showEasterEgg)}
-              className="group relative mb-2 h-40 w-40 grayscale filter sm:h-56 sm:w-56 overflow-hidden cursor-pointer transition-all duration-500 hover:grayscale-0 active:scale-95"
+              className="group relative mb-8 h-40 w-40 sm:h-56 sm:w-56 overflow-hidden cursor-pointer transition-all duration-500 hover:scale-[1.05] active:scale-95 rounded-full"
               aria-label="Toggle Aura Mode"
             >
+              {/* Circular Scanlines Overlay */}
+              <div className="absolute inset-0 z-10 opacity-20 pointer-events-none rounded-full bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]" />
+
               <Image
-                src="/me.png" // User's photo
-                alt="Profile"
+                src="/MY IMAGE.JPG"
+                alt="Dhanush Kumar"
                 fill
-                className={`object-contain transition-all duration-700 ${showEasterEgg ? 'grayscale-0 scale-105' : 'grayscale'}`}
+                className={`object-cover object-[center_20%] rounded-full transition-all duration-1000 grayscale ${
+                  showEasterEgg
+                    ? 'scale-110 brightness-125 contrast-150'
+                    : 'brightness-100 contrast-110'
+                }`}
                 priority
               />
-              <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white via-white/60 to-transparent dark:from-black dark:via-black/60 backdrop-blur-[1px]" />
 
-              {/* Subtle Glow on Hover */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 shadow-[inset_0_0_20px_rgba(59,130,246,0.3)] rounded-full pointer-events-none" />
+              {/* Technical Overlays */}
+              <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent dark:from-black dark:via-transparent z-20" />
+
+              {/* Corner Accents */}
+              <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-blue-500/50 z-30 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-blue-500/50 z-30 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+              {/* Holographic Aura on Click */}
+              {showEasterEgg && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: [0, 0.4, 0.2] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute inset-0 bg-blue-500/20 mix-blend-overlay z-30"
+                />
+              )}
             </button>
 
             {/* Hero Text */}
@@ -339,7 +359,6 @@ export default function Home() {
               </p>
             </div>
 
-            <NeuralNetworkSim />
 
             {/* The Chronicle - Interactive Resume Section */}
             <div className="mb-24 w-full text-left">
