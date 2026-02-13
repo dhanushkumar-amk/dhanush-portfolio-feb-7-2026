@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-import { ExternalLink, Github, Code2, Server, Database, Zap, Network } from "lucide-react";
+import { ExternalLink, Github, Code2, Server, Database, Zap, Network, BookOpen } from "lucide-react";
 import { useState } from "react";
-import { SystemBlueprint } from "./SystemBlueprint";
+import { SystemBlueprint, BlueprintData } from "./SystemBlueprint";
+import { CaseStudy } from "./CaseStudy";
 
 interface ProjectCardProps {
   title: string;
@@ -13,6 +13,13 @@ interface ProjectCardProps {
   githubUrl?: string;
   liveUrl?: string;
   type: "frontend" | "backend" | "fullstack" | "system";
+  caseStudy?: {
+    problem: string;
+    solution: string;
+    architecture: string[];
+    impact: string;
+  };
+  blueprint?: BlueprintData;
 }
 
 const typeIcons = {
@@ -29,8 +36,9 @@ const typeColors = {
   system: "bg-amber-500",
 };
 
-export const ProjectCard = ({ title, description, tags, githubUrl, liveUrl, type }: ProjectCardProps) => {
+export const ProjectCard = ({ title, description, tags, githubUrl, liveUrl, type, caseStudy, blueprint }: ProjectCardProps) => {
   const [isBlueprintOpen, setIsBlueprintOpen] = useState(false);
+  const [isCaseStudyOpen, setIsCaseStudyOpen] = useState(false);
 
   return (
     <>
@@ -45,7 +53,7 @@ export const ProjectCard = ({ title, description, tags, githubUrl, liveUrl, type
             </span>
           </div>
           <div className="flex gap-3">
-            {type === "system" && (
+            {blueprint && (
               <button
                 onClick={() => setIsBlueprintOpen(true)}
                 className="flex items-center gap-1.5 rounded-lg bg-zinc-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-zinc-500 transition-all hover:bg-zinc-100 dark:bg-zinc-800/50 dark:text-zinc-400 dark:hover:bg-zinc-800"
@@ -85,15 +93,27 @@ export const ProjectCard = ({ title, description, tags, githubUrl, liveUrl, type
           {description}
         </p>
 
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-gray-50 px-3 py-1 text-[10px] font-medium text-gray-500 transition-colors group-hover:bg-blue-50 group-hover:text-blue-600 dark:bg-zinc-800/50 dark:text-zinc-500 dark:group-hover:bg-blue-900/20 dark:group-hover:text-blue-400"
+        <div className="flex items-center justify-between mt-auto">
+          <div className="flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-gray-50 px-3 py-1 text-[10px] font-medium text-gray-500 transition-colors group-hover:bg-blue-50 group-hover:text-blue-600 dark:bg-zinc-800/50 dark:text-zinc-500 dark:group-hover:bg-blue-900/20 dark:group-hover:text-blue-400"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {caseStudy && (
+            <button
+              onClick={() => setIsCaseStudyOpen(true)}
+              className="flex items-center gap-1.5 rounded-lg bg-blue-500/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-blue-600 transition-all hover:bg-blue-500 hover:text-white dark:bg-blue-500/20 dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white"
             >
-              {tag}
-            </span>
-          ))}
+              <BookOpen className="h-3 w-3" />
+              Case Study
+            </button>
+          )}
         </div>
 
         {/* Subtle Gradient Overlay */}
@@ -104,6 +124,13 @@ export const ProjectCard = ({ title, description, tags, githubUrl, liveUrl, type
         isOpen={isBlueprintOpen}
         onClose={() => setIsBlueprintOpen(false)}
         title={title}
+        data={blueprint}
+      />
+
+      <CaseStudy
+        isOpen={isCaseStudyOpen}
+        onClose={() => setIsCaseStudyOpen(false)}
+        project={{ title, caseStudy }}
       />
     </>
   );
