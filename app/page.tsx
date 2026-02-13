@@ -1,9 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Github, Linkedin, Bot, User, QrCode, X, Music, Pause, Terminal as TerminalIcon, Command, Code } from "lucide-react";
+import { Github, Linkedin, Bot, User, QrCode, X, Music, Pause, Command, Code } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
-import { ExperienceItem } from "./components/ExperienceItem";
 import { GithubGraph } from "./components/GithubGraph";
 import { TechStack } from "./components/TechStack";
 import { useState, useEffect, useRef } from "react";
@@ -15,6 +14,8 @@ import { PomodoroTimer } from "./components/PomodoroTimer";
 import { NeuralNetworkSim } from "./components/NeuralNetworkSim";
 import { ProjectCard } from "./components/ProjectCard";
 import { Terminal } from "./components/Terminal";
+import { StatusBoard } from "./components/StatusBoard";
+import { InteractiveResume } from "./components/InteractiveResume";
 
 import { getMarkdownContent } from "./data/content";
 
@@ -246,25 +247,13 @@ export default function Home() {
 
             <NeuralNetworkSim />
 
-            {/* Experience Section */}
-            <div className="mb-16 w-full text-left">
-              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                Experience
+            {/* The Chronicle - Interactive Resume Section */}
+            <div className="mb-24 w-full text-left">
+              <h2 className="mb-12 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 text-center">
+                The Chronicle
               </h2>
-              <div className="space-y-12">
-                <ExperienceItem
-                  title="CodeTech IT Solution"
-                  role="Web Developer, India"
-                  collapsible={true}
-                >
-                  <div className="space-y-2">
-                    <p>Contributed to scalable web solutions and integrations, focusing on backend efficiency and robust frontend delivery.</p>
-                    <p>Worked on implementing secure authentication flows and optimizing database queries for production environments.</p>
-                  </div>
-                </ExperienceItem>
-              </div>
+              <InteractiveResume />
             </div>
-
 
             {/* Product Building Journey Section */}
             <div className="mb-16 w-full text-left">
@@ -279,29 +268,6 @@ export default function Home() {
               <p className="mt-8 text-center font-medium italic text-gray-400 dark:text-zinc-600">
                 &quot;Consistent building is the only way to master the machine.&quot;
               </p>
-            </div>
-
-
-            {/* Education Section */}
-            <div className="mb-16 w-full text-left">
-              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                Education
-              </h2>
-              <div className="space-y-12">
-                <ExperienceItem
-                  title="Hindusthan College of Arts and Science"
-                  role="M.Sc. Information Technology"
-                >
-                  <p>2025 - Present</p>
-                </ExperienceItem>
-
-                <ExperienceItem
-                  title="Nallamuthu Gounder Mahalingam College"
-                  role="BCA – Bachelor of Computer Applications"
-                >
-                  <p>CGPA: 7.92 | 2022 - 2025</p>
-                </ExperienceItem>
-              </div>
             </div>
 
             {/* Contributions Section */}
@@ -327,6 +293,11 @@ export default function Home() {
                   <p className="text-sm text-gray-500">GFG College Coding Score</p>
                 </div>
               </div>
+            </div>
+
+            {/* Status Board Section */}
+            <div className="mb-16 w-full text-left">
+              <StatusBoard />
             </div>
 
             {/* Tech Stack Section */}
