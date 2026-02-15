@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Terminal as TerminalIcon } from "lucide-react";
 
+//
+
 interface HistoryItem {
   command: string;
   output: React.ReactNode;
