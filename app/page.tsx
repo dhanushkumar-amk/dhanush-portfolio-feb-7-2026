@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Github, Linkedin, Bot, User, QrCode, X, Music, Pause, Command, Code } from "lucide-react";
+import { Github, Linkedin, Bot, User, QrCode, X, Music, Pause, Command, Code, FileDown, ArrowRight } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
 import { GithubGraph } from "./components/GithubGraph";
 import { TechStack } from "./components/TechStack";
@@ -15,6 +15,7 @@ import { ProjectCard } from "./components/ProjectCard";
 import { Terminal } from "./components/Terminal";
 import { StatusBoard } from "./components/StatusBoard";
 import { InteractiveResume } from "./components/InteractiveResume";
+import { CodingStats } from "./components/CodingStats";
 
 import { getMarkdownContent } from "./data/content";
 
@@ -24,6 +25,7 @@ const projects = [
     description: "Designed a secure offline transaction flow with deferred blockchain synchronization and AI real-time fraud detection. Built for eventual consistency and privacy.",
     tags: ["Web3", "Blockchain", "AI", "Mobile"],
     type: "system" as const,
+    status: "Currently Doing",
     caseStudy: {
       problem: "Traditional Web3 payments require constant internet connectivity, making them unusable in low-signal areas or for instant retail transactions where network latency is high.",
       solution: "Implemented an offline-first architecture using local SQLite storage and a deferred synchronization engine that batches transactions for blockchain commitment once 'online' status is confirmed.",
@@ -39,11 +41,11 @@ const projects = [
         { x: 700, y: 225, label: "Blockchain", iconType: "shield", color: "rose" }
       ],
       connections: [
-        { from: [150, 225], to: [300, 150], label: "ASYNC_REQ", delay: 0.2 },
-        { from: [150, 225], to: [300, 300], label: "LOCAL_SYNC", delay: 0.4 },
-        { from: [300, 150], to: [500, 225], label: "FRAUD_VAL", delay: 0.6 },
-        { from: [300, 300], to: [500, 225], label: "POST_TX", delay: 0.8 },
-        { from: [500, 225], to: [700, 225], label: "L1_COMMIT", delay: 1.0 }
+        { from: [150, 225] as [number, number], to: [300, 150] as [number, number], label: "ASYNC_REQ", delay: 0.2 },
+        { from: [150, 225] as [number, number], to: [300, 300] as [number, number], label: "LOCAL_SYNC", delay: 0.4 },
+        { from: [300, 150] as [number, number], to: [500, 225] as [number, number], label: "FRAUD_VAL", delay: 0.6 },
+        { from: [300, 300] as [number, number], to: [500, 225] as [number, number], label: "POST_TX", delay: 0.8 },
+        { from: [500, 225] as [number, number], to: [700, 225] as [number, number], label: "L1_COMMIT", delay: 1.0 }
       ],
       metrics: { latency: "14.2ms", throughput: "84.2 TPS" },
       description: "Illustrates the eventual consistency model with offline-first capabilities and AI-driven fraud mitigation."
@@ -69,10 +71,10 @@ const projects = [
         { x: 750, y: 225, label: "Env Storage", iconType: "database", color: "blue" }
       ],
       connections: [
-        { from: [150, 225], to: [350, 225], label: "WEBSOCKET", delay: 0.2 },
-        { from: [350, 225], to: [550, 150], label: "inference_v1", delay: 0.4 },
-        { from: [350, 225], to: [550, 300], label: "provision", delay: 0.6 },
-        { from: [550, 300], to: [750, 225], label: "PERSIST", delay: 0.8 }
+        { from: [150, 225] as [number, number], to: [350, 225] as [number, number], label: "WEBSOCKET", delay: 0.2 },
+        { from: [350, 225] as [number, number], to: [550, 150] as [number, number], label: "inference_v1", delay: 0.4 },
+        { from: [350, 225] as [number, number], to: [550, 300] as [number, number], label: "provision", delay: 0.6 },
+        { from: [550, 300] as [number, number], to: [750, 225] as [number, number], label: "PERSIST", delay: 0.8 }
       ],
       metrics: { latency: "28.5ms", throughput: "120 REQ/S" },
       description: "Architecture for real-time collaborative editing with automated environment provisioning."
@@ -98,11 +100,11 @@ const projects = [
         { x: 700, y: 225, label: "Redis Cluster", iconType: "database", color: "rose" }
       ],
       connections: [
-        { from: [100, 225], to: [300, 225], label: "TLS_REQ", delay: 0.1 },
-        { from: [300, 225], to: [500, 120], label: "PUSH", delay: 0.3 },
-        { from: [300, 225], to: [500, 330], label: "STREAM", delay: 0.5 },
-        { from: [500, 120], to: [700, 225], label: "PUB_SUB", delay: 0.7 },
-        { from: [500, 330], to: [700, 225], label: "CACHE", delay: 0.9 }
+        { from: [100, 225] as [number, number], to: [300, 225] as [number, number], label: "TLS_REQ", delay: 0.1 },
+        { from: [300, 225] as [number, number], to: [500, 120] as [number, number], label: "PUSH", delay: 0.3 },
+        { from: [300, 225] as [number, number], to: [500, 330] as [number, number], label: "STREAM", delay: 0.5 },
+        { from: [500, 120] as [number, number], to: [700, 225] as [number, number], label: "PUB_SUB", delay: 0.7 },
+        { from: [500, 330] as [number, number], to: [700, 225] as [number, number], label: "CACHE", delay: 0.9 }
       ],
       metrics: { latency: "12ms", throughput: "5.2k CONN" },
       description: "Microservices design for high-scale real-time audio and message distribution."
@@ -128,10 +130,10 @@ const projects = [
         { x: 750, y: 300, label: "Fin Analytics", iconType: "database", color: "blue" }
       ],
       connections: [
-        { from: [150, 225], to: [350, 225], label: "PDF_BUFFER", delay: 0.2 },
-        { from: [350, 225], to: [550, 225], label: "ENTITY_EXT", delay: 0.4 },
-        { from: [550, 225], to: [750, 150], label: "VERIFY", delay: 0.6 },
-        { from: [550, 225], to: [750, 300], label: "MAP_STATE", delay: 0.8 }
+        { from: [150, 225] as [number, number], to: [350, 225] as [number, number], label: "PDF_BUFFER", delay: 0.2 },
+        { from: [350, 225] as [number, number], to: [550, 225] as [number, number], label: "ENTITY_EXT", delay: 0.4 },
+        { from: [550, 225] as [number, number], to: [750, 150] as [number, number], label: "VERIFY", delay: 0.6 },
+        { from: [550, 225] as [number, number], to: [750, 300] as [number, number], label: "MAP_STATE", delay: 0.8 }
       ],
       metrics: { latency: "1.2s", throughput: "45 SCAN/M" },
       description: "AI-driven entity extraction pipeline for automated financial reconciliation."
@@ -350,17 +352,61 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="w-full space-y-4 text-left text-base leading-relaxed text-gray-600 dark:text-gray-400 sm:text-lg md:text-xl">
+            {/* Hero Intro */}
+            <div className="w-full space-y-4 text-left text-base leading-relaxed text-gray-600 dark:text-gray-400 sm:text-lg md:text-xl mb-12">
               <p>
                 a full-stack developer and <a href="https://en.wikipedia.org/wiki/System_design" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-black dark:hover:text-white transition-colors">system design enthusiast</a> passionate about building scalable, production-ready applications.
               </p>
               <p>
                 specializing in <span className="text-black dark:text-white font-medium">Backend Architecture</span>, AI Agents, and Web3, bridging the gap between complex logic and user-centric design.
               </p>
+
+              <div className="flex flex-wrap items-center justify-start gap-4 pt-4">
+                <a
+                  href="/RESUME_PROJECT_30_MAY_2025.pdf"
+                  download="Dhanush_Kumar_Resume"
+                  className="flex items-center gap-2 rounded-full bg-black px-6 py-3 text-sm font-medium text-white transition-all hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                >
+                  <FileDown className="h-4 w-4" />
+                  Download CV
+                </a>
+                <button
+                  onClick={() => {
+                    const contactSection = document.getElementById('contact');
+                    contactSection?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="flex items-center gap-2 rounded-full border border-gray-200 bg-white/50 px-6 py-3 text-sm font-medium text-black transition-all hover:bg-white dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-white dark:hover:bg-zinc-900 shadow-sm"
+                >
+                  Get in Touch
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
             </div>
 
+            {/* About Me Section (Professional Summary) */}
+            <div className="mb-24 w-full text-left">
+              <h2 className="mb-12 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 text-center">
+                About Me
+              </h2>
+              <div className="mx-auto max-w-2xl rounded-3xl border border-gray-100 dark:border-zinc-800 p-8 sm:p-12 text-center bg-gray-50/50 dark:bg-zinc-900/30 backdrop-blur-sm">
+                <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl mb-6">
+                  I am a high-performance engineer focused on building resilient systems that bridge the gap between complex backend logic and seamless user experiences. I thrive on solving architectural challenges and optimizing for speed and scale.
+                </p>
+                <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl italic font-medium">
+                  &quot;Architecting the future, one microservice at a time.&quot;
+                </p>
+              </div>
+            </div>
 
-            {/* The Chronicle - Interactive Resume Section */}
+            {/* Technical Expertise (Skills) */}
+            <div className="mb-24 w-full text-left">
+              <h2 className="mb-8 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 text-center">
+                Technical Expertise
+              </h2>
+              <TechStack />
+            </div>
+
+            {/* The Chronicle (Education & Experience) */}
             <div className="mb-24 w-full text-left">
               <h2 className="mb-12 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 text-center">
                 The Chronicle
@@ -368,8 +414,8 @@ export default function Home() {
               <InteractiveResume />
             </div>
 
-            {/* Product Building Journey Section */}
-            <div className="mb-16 w-full text-left">
+            {/* Product Building Journey (Projects) */}
+            <div className="mb-24 w-full text-left">
               <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
                 The Product Building Journey
               </h2>
@@ -383,29 +429,12 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Contributions Section */}
-            <div className="mb-16 w-full text-left">
-              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                GitHub Contributions
-              </h2>
-              <GithubGraph />
-            </div>
-
             {/* Achievements Section */}
             <div className="mb-16 w-full text-left">
               <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
                 Achievements & Stats
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="rounded-xl border border-gray-100 dark:border-zinc-800 p-6">
-                  <p className="text-3xl font-bold">400+</p>
-                  <p className="text-sm text-gray-500">LeetCode Problems Solved</p>
-                </div>
-                <div className="rounded-xl border border-gray-100 dark:border-zinc-800 p-6">
-                  <p className="text-3xl font-bold">Rank #1</p>
-                  <p className="text-sm text-gray-500">GFG College Coding Score</p>
-                </div>
-              </div>
+              <CodingStats />
             </div>
 
             {/* Status Board Section */}
@@ -413,16 +442,6 @@ export default function Home() {
               <StatusBoard />
             </div>
 
-            {/* Tech Stack Section */}
-            <div className="mb-16 w-full text-left">
-              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                Tech Stack
-              </h2>
-              <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
-                I specialize in heavy-duty backend systems and automation:
-              </p>
-              <TechStack />
-            </div>
 
             {/* Writings & Blogs Section */}
             <div className="mb-16 w-full text-left">
@@ -464,24 +483,53 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Thing about me Section */}
+            {/* Contributions Section */}
+            <div className="mb-16 w-full text-left">
+              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                GitHub Contributions
+              </h2>
+              <GithubGraph />
+            </div>
+
+            {/* Hobbies / Human Perspective Section */}
             <div className="mb-16 w-full text-left">
               <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
                 The Human Perspective
               </h2>
-              <div className="space-y-6">
-                <p className="w-full text-lg leading-relaxed text-gray-600 dark:text-gray-400">
-                  Beyond the terminals and cloud instances, I find balance in understanding the core of how technologies interact. My approach is driven by a desire to build systems that aren&apos;t just functional, but resilient.
-                </p>
-
-                <p className="w-full text-lg leading-relaxed text-gray-600 dark:text-gray-400">
-                  I believe that the best systems are built by people who understand both the low-level constraints and the high-level business goals.
-                </p>
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="flex flex-col gap-2 rounded-xl border border-gray-100 dark:border-zinc-800 p-6 bg-white/50 dark:bg-zinc-900/20 backdrop-blur-sm transition-all hover:bg-white dark:hover:bg-zinc-900/30">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-2xl">♟️</span>
+                    <div className="grid grid-cols-2 gap-0.5 opacity-40">
+                      <div className="w-1.5 h-1.5 bg-black dark:bg-white"></div>
+                      <div className="w-1.5 h-1.5 bg-gray-300 dark:bg-zinc-700"></div>
+                      <div className="w-1.5 h-1.5 bg-gray-300 dark:bg-zinc-700"></div>
+                      <div className="w-1.5 h-1.5 bg-black dark:bg-white"></div>
+                    </div>
+                  </div>
+                  <h3 className="font-bold text-sm">Chess</h3>
+                  <p className="text-xs text-gray-500">Strategy & logic.</p>
+                </div>
+                <div className="flex flex-col gap-2 rounded-xl border border-gray-100 dark:border-zinc-800 p-6 bg-white/50 dark:bg-zinc-900/20 backdrop-blur-sm">
+                  <span className="text-2xl">📈</span>
+                  <h3 className="font-bold text-sm">Trading</h3>
+                  <p className="text-xs text-gray-500">Market analysis.</p>
+                </div>
+                <div className="flex flex-col gap-2 rounded-xl border border-gray-100 dark:border-zinc-800 p-6 bg-white/50 dark:bg-zinc-900/20 backdrop-blur-sm">
+                  <span className="text-2xl">🎬</span>
+                  <h3 className="font-bold text-sm">Cinema</h3>
+                  <p className="text-xs text-gray-500">Visual storytelling.</p>
+                </div>
+                <div className="flex flex-col gap-2 rounded-xl border border-gray-100 dark:border-zinc-800 p-6 bg-white/50 dark:bg-zinc-900/20 backdrop-blur-sm">
+                  <span className="text-2xl">🎵</span>
+                  <h3 className="font-bold text-sm">Music</h3>
+                  <p className="text-xs text-gray-500">Focus & flow.</p>
+                </div>
               </div>
             </div>
 
             {/* Get in Touch Section */}
-            <div className="mb-16 w-full text-left">
+            <div id="contact" className="mb-16 w-full text-left">
               <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400">
                 Get in Touch
               </h2>

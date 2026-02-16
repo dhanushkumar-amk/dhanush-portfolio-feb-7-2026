@@ -7,53 +7,64 @@ import Image from "next/image";
 
 const categories = [
     {
-        name: "Languages",
+        name: "Front-End Development",
         skills: [
-            { name: "TypeScript", slug: "typescript" },
+            { name: "HTML", slug: "html5" },
+            { name: "CSS", slug: "css3" },
             { name: "JavaScript", slug: "javascript" },
-            { name: "Python", slug: "python" },
-            { name: "Java", slug: "java" },
-            { name: "C++", slug: "cplusplus" },
-        ]
-    },
-    {
-        name: "Frontend",
-        skills: [
-            { name: "React", slug: "react" },
+            { name: "React.js", slug: "react" },
             { name: "Next.js", slug: "nextdotjs" },
-            { name: "Tailwind CSS", slug: "tailwindcss" },
-            { name: "Framer Motion", slug: "framer" },
-            { name: "Redux", slug: "redux" },
+            { name: "TailwindCSS", slug: "tailwindcss" },
         ]
     },
     {
-        name: "Backend & DB",
+        name: "Back-End Development",
         skills: [
             { name: "Node.js", slug: "nodedotjs" },
             { name: "Express.js", slug: "express" },
-            { name: "PostgreSQL", slug: "postgresql" },
-            { name: "MongoDB", slug: "mongodb" },
-            { name: "Redis", slug: "redis" },
+            { name: "TypeScript", slug: "typescript" },
             { name: "Socket.IO", slug: "socketdotio" },
+            { name: "RESTful APIs", slug: "postman" },
         ]
     },
     {
-        name: "Tools & Cloud",
+        name: "Database & ORM",
         skills: [
-            { name: "Docker", slug: "docker" },
-            { name: "AWS", slug: "amazonaws" },
-            { name: "n8n", slug: "n8n" },
+            { name: "MongoDB", slug: "mongodb" },
+            { name: "PostgreSQL", slug: "postgresql" },
+            { name: "Redis", slug: "redis" },
+            { name: "Mongoose", slug: "mongoose" },
+            { name: "Supabase", slug: "supabase" },
+        ]
+    },
+    {
+        name: "DevOps & Tools",
+        skills: [
             { name: "Git", slug: "git" },
             { name: "GitHub", slug: "github" },
-            { name: "Vercel", slug: "vercel" },
+            { name: "Docker", slug: "docker" },
+            { name: "AWS", slug: "amazonaws" },
+            { name: "Postman", slug: "postman" },
         ]
     },
     {
-        name: "Specialized",
+        name: "AI Automation & Technologies",
         skills: [
-            { name: "Web3", slug: "ethereum" },
-            { name: "Microservices", slug: "googlecloud" },
+            { name: "n8n", slug: "n8n" },
+            { name: "Make.com", slug: "make" },
+            { name: "AI Agents", slug: "openai" },
+            { name: "RAG", slug: "pinecone" },
+            { name: "Vector Databases", slug: "weaviate" },
+            { name: "MCP", slug: "googlecloud" },
+            { name: "Prompt Engineering", slug: "anthropic" },
+        ]
+    },
+    {
+        name: "Other Technical Skills",
+        skills: [
+            { name: "DSA (Java)", slug: "java" },
             { name: "System Design", slug: "diagramsdotnet" },
+            { name: "Microservices", slug: "kubernetes" },
         ]
     }
 ];
@@ -89,12 +100,12 @@ export function TechStack() {
                             <div className="flex gap-12 py-4 pr-12">
                                 {marqueeSkills.map((tech, index) => (
                                     <div key={index} className="flex flex-col items-center justify-center gap-2">
-                                        <div className="h-10 w-10 transition-all duration-300 relative">
+                                        <div className="h-10 w-10 transition-all duration-300 relative group/icon">
                                             <Image
                                                 src={`https://cdn.simpleicons.org/${tech.slug}`}
                                                 alt={tech.name}
                                                 fill
-                                                className="object-contain opacity-80 hover:opacity-100 transition-all duration-300 brightness-0 hover:brightness-100 dark:brightness-0 dark:invert dark:hover:invert-0 dark:hover:brightness-100"
+                                                className="object-contain opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 dark:invert dark:hover:invert-0"
                                                 loading="lazy"
                                                 unoptimized
                                             />
@@ -105,12 +116,12 @@ export function TechStack() {
                             <div className="flex gap-12 py-4 pr-12">
                                 {marqueeSkills.map((tech, index) => (
                                     <div key={index + marqueeSkills.length} className="flex flex-col items-center justify-center gap-2">
-                                        <div className="h-10 w-10 transition-all duration-300 relative">
+                                        <div className="h-10 w-10 transition-all duration-300 relative group/icon">
                                             <Image
                                                 src={`https://cdn.simpleicons.org/${tech.slug}`}
                                                 alt={tech.name}
                                                 fill
-                                                className="object-contain opacity-80 hover:opacity-100 transition-all duration-300 brightness-0 hover:brightness-100 dark:brightness-0 dark:invert dark:hover:invert-0 dark:hover:brightness-100"
+                                                className="object-contain opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 dark:invert dark:hover:invert-0"
                                                 loading="lazy"
                                                 unoptimized
                                             />
@@ -146,7 +157,7 @@ export function TechStack() {
                                                         src={`https://cdn.simpleicons.org/${skill.slug}`}
                                                         alt={skill.name}
                                                         fill
-                                                        className="object-contain opacity-50 group-hover:opacity-100 transition-all duration-300 brightness-0 group-hover:brightness-100 dark:brightness-0 dark:invert dark:group-hover:invert-0 dark:group-hover:brightness-100"
+                                                        className="object-contain opacity-40 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500 dark:invert group-hover:dark:invert-0"
                                                         loading="lazy"
                                                         unoptimized
                                                     />

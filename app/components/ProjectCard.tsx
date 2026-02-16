@@ -20,6 +20,7 @@ interface ProjectCardProps {
     impact: string;
   };
   blueprint?: BlueprintData;
+  status?: string;
 }
 
 const typeIcons = {
@@ -36,7 +37,7 @@ const typeColors = {
   system: "bg-amber-500",
 };
 
-export const ProjectCard = ({ title, description, tags, githubUrl, liveUrl, type, caseStudy, blueprint }: ProjectCardProps) => {
+export const ProjectCard = ({ title, description, tags, githubUrl, liveUrl, type, caseStudy, blueprint, status }: ProjectCardProps) => {
   const [isBlueprintOpen, setIsBlueprintOpen] = useState(false);
   const [isCaseStudyOpen, setIsCaseStudyOpen] = useState(false);
 
@@ -52,36 +53,43 @@ export const ProjectCard = ({ title, description, tags, githubUrl, liveUrl, type
               {typeIcons[type]}
             </span>
           </div>
-          <div className="flex gap-3">
-            {blueprint && (
-              <button
-                onClick={() => setIsBlueprintOpen(true)}
-                className="flex items-center gap-1.5 rounded-lg bg-zinc-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-zinc-500 transition-all hover:bg-zinc-100 dark:bg-zinc-800/50 dark:text-zinc-400 dark:hover:bg-zinc-800"
-              >
-                <Network className="h-3 w-3" />
-                Blueprint
-              </button>
+          <div className="flex items-center gap-3">
+            {status && (
+              <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+                {status}
+              </span>
             )}
-            {githubUrl && (
-              <a
-                href={githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center text-gray-400 transition-colors hover:text-black dark:hover:text-white"
-              >
-                <Github className="h-5 w-5" />
-              </a>
-            )}
-            {liveUrl && (
-              <a
-                href={liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center text-gray-400 transition-colors hover:text-black dark:hover:text-white"
-              >
-                <ExternalLink className="h-5 w-5" />
-              </a>
-            )}
+            <div className="flex gap-3">
+              {blueprint && (
+                <button
+                  onClick={() => setIsBlueprintOpen(true)}
+                  className="flex items-center gap-1.5 rounded-lg bg-zinc-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-zinc-500 transition-all hover:bg-zinc-100 dark:bg-zinc-800/50 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                >
+                  <Network className="h-3 w-3" />
+                  Blueprint
+                </button>
+              )}
+              {githubUrl && (
+                <a
+                  href={githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center text-gray-400 transition-colors hover:text-black dark:hover:text-white"
+                >
+                  <Github className="h-5 w-5" />
+                </a>
+              )}
+              {liveUrl && (
+                <a
+                  href={liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center text-gray-400 transition-colors hover:text-black dark:hover:text-white"
+                >
+                  <ExternalLink className="h-5 w-5" />
+                </a>
+              )}
+            </div>
           </div>
         </div>
 
@@ -89,7 +97,7 @@ export const ProjectCard = ({ title, description, tags, githubUrl, liveUrl, type
           {title}
         </h3>
 
-        <p className="mb-6 flex-grow text-sm leading-relaxed text-gray-600 dark:text-zinc-400">
+        <p className="mb-6 grow text-sm leading-relaxed text-gray-600 dark:text-zinc-400">
           {description}
         </p>
 
@@ -117,7 +125,7 @@ export const ProjectCard = ({ title, description, tags, githubUrl, liveUrl, type
         </div>
 
         {/* Subtle Gradient Overlay */}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-transparent via-transparent to-blue-50/30 opacity-0 transition-opacity group-hover:opacity-100 dark:to-blue-900/5" />
+        <div className="absolute inset-0 -z-10 bg-linear-to-br from-white via-white/95 to-blue-50/30 dark:from-zinc-900 dark:via-zinc-900/98 dark:to-blue-900/10 opacity-0 transition-opacity group-hover:opacity-100" />
       </motion.div>
 
       <SystemBlueprint
