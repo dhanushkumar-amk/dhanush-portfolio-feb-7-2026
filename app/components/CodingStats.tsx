@@ -114,6 +114,43 @@ export const CodingStats = () => {
           </div>
         </div>
       </motion.a>
+
+      {/* AWS Certification Card */}
+      <motion.a
+        href="https://aws.amazon.com/certification/certified-cloud-practitioner/"
+        target="_blank"
+        rel="noopener noreferrer"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="group relative overflow-hidden rounded-2xl border border-gray-100 bg-white/50 p-6 transition-all hover:border-amber-500/50 dark:border-zinc-800 dark:bg-zinc-900/30 backdrop-blur-sm col-span-1 sm:col-span-2"
+      >
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Trophy className="h-5 w-5 text-amber-500" />
+            <span className="text-xs font-bold uppercase tracking-widest text-gray-500">AWS Certification</span>
+          </div>
+          <div className="flex items-center gap-1.5 rounded-full bg-amber-500/10 px-2 py-1 text-[10px] font-bold text-amber-600 dark:text-amber-400">
+            <CheckCircle2 className="h-3 w-3" />
+            CERTIFIED
+          </div>
+        </div>
+
+        <div className="flex items-end justify-between">
+          <div>
+            <p className="text-lg font-bold text-black dark:text-white leading-tight">
+              AWS Certified
+            </p>
+            <p className="text-sm text-gray-500 mt-1">Cloud Practitioner (CLF-C02)</p>
+          </div>
+          <div className="text-right">
+            <p className="text-sm font-medium text-amber-600 dark:text-amber-400">Amazon Web Services</p>
+            <p className="text-[10px] text-gray-500 mt-1 flex items-center gap-1 justify-end">
+              View Credential <ExternalLink className="h-3 w-3" />
+            </p>
+          </div>
+        </div>
+      </motion.a>
     </div>
   );
 };

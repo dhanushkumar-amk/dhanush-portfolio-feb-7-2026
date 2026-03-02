@@ -16,10 +16,76 @@ import { Terminal } from "./components/Terminal";
 import { StatusBoard } from "./components/StatusBoard";
 import { InteractiveResume } from "./components/InteractiveResume";
 import { CodingStats } from "./components/CodingStats";
+import { ContactForm } from "./components/ContactForm";
+import { BlogCards } from "./components/BlogCards";
 
 import { getMarkdownContent } from "./data/content";
 
 const projects = [
+  {
+    title: "EventMaster – AI-Powered Event Management",
+    description: "A full-stack event management platform with AI-driven attendee analytics, real-time QR check-in, automated notifications, and role-based access control for organizers and attendees.",
+    tags: ["Next.js", "Node.js", "PostgreSQL", "Gemini AI", "Socket.IO"],
+    type: "fullstack" as const,
+    status: "Completed",
+    githubUrl: "https://github.com/dhanushkumar-amk",
+    caseStudy: {
+      problem: "Event organizers struggle with manual check-ins, scattered attendee data, and no real-time insights during live events — leading to poor attendee experience.",
+      solution: "Built a centralized event platform with QR-based check-in scanner, live attendee dashboard, AI-powered feedback analysis, and automated email/SMS reminders using Node.js cron jobs.",
+      architecture: ["Next.js", "Node.js", "PostgreSQL", "Gemini AI", "Socket.IO", "Nodemailer"],
+      impact: "Reduced manual check-in time by 80%, enabled real-time capacity tracking, and automated 100% of post-event feedback collection for organizers."
+    },
+    blueprint: {
+      nodes: [
+        { x: 120, y: 225, label: "Attendee App", iconType: "globe", color: "blue" },
+        { x: 300, y: 150, label: "QR Scanner", iconType: "cpu", color: "emerald" },
+        { x: 300, y: 300, label: "AI Engine", iconType: "zap", color: "purple" },
+        { x: 500, y: 225, label: "API Server", iconType: "network", color: "amber" },
+        { x: 700, y: 225, label: "PostgreSQL", iconType: "database", color: "blue" }
+      ],
+      connections: [
+        { from: [120, 225] as [number, number], to: [300, 150] as [number, number], label: "QR_SCAN", delay: 0.2 },
+        { from: [120, 225] as [number, number], to: [300, 300] as [number, number], label: "FEEDBACK", delay: 0.4 },
+        { from: [300, 150] as [number, number], to: [500, 225] as [number, number], label: "VERIFY", delay: 0.6 },
+        { from: [300, 300] as [number, number], to: [500, 225] as [number, number], label: "AI_RESP", delay: 0.8 },
+        { from: [500, 225] as [number, number], to: [700, 225] as [number, number], label: "PERSIST", delay: 1.0 }
+      ],
+      metrics: { latency: "18ms", throughput: "500 CHECK-INS/M" },
+      description: "Real-time event operations with AI feedback analysis and live attendee tracking."
+    }
+  },
+  {
+    title: "P-DEX – Decentralized AI Talent Network",
+    description: "A Web3-based decentralized talent marketplace where developers list skills as on-chain profiles, AI matches them to projects, and payments are handled via smart contracts.",
+    tags: ["Web3", "Solidity", "Next.js", "Gemini AI", "IPFS"],
+    type: "system" as const,
+    status: "In Progress",
+    githubUrl: "https://github.com/dhanushkumar-amk",
+    caseStudy: {
+      problem: "Freelance platforms take 20–30% commission, have centralized control over talent data, and lack transparent payment guarantees — creating distrust between clients and developers.",
+      solution: "Built a decentralized platform where talent profiles are stored on IPFS, smart contracts escrow payments, and Gemini AI matches developer skill vectors to project requirements.",
+      architecture: ["Solidity", "Next.js", "IPFS", "Gemini AI", "Hardhat", "Ethers.js"],
+      impact: "Eliminates platform commissions, provides trustless milestone payments, and uses AI matching to reduce hiring time by 60% compared to traditional platforms."
+    },
+    blueprint: {
+      nodes: [
+        { x: 100, y: 225, label: "Dev Profile", iconType: "globe", color: "emerald" },
+        { x: 300, y: 150, label: "AI Matcher", iconType: "cpu", color: "purple" },
+        { x: 300, y: 300, label: "IPFS Store", iconType: "database", color: "blue" },
+        { x: 500, y: 225, label: "Smart Contract", iconType: "shield", color: "amber" },
+        { x: 700, y: 225, label: "Blockchain", iconType: "network", color: "rose" }
+      ],
+      connections: [
+        { from: [100, 225] as [number, number], to: [300, 150] as [number, number], label: "SKILL_VEC", delay: 0.2 },
+        { from: [100, 225] as [number, number], to: [300, 300] as [number, number], label: "IPFS_PIN", delay: 0.4 },
+        { from: [300, 150] as [number, number], to: [500, 225] as [number, number], label: "MATCH_SCORE", delay: 0.6 },
+        { from: [300, 300] as [number, number], to: [500, 225] as [number, number], label: "CID_HASH", delay: 0.8 },
+        { from: [500, 225] as [number, number], to: [700, 225] as [number, number], label: "ESCROW_TX", delay: 1.0 }
+      ],
+      metrics: { latency: "2.1s", throughput: "0% Commission" },
+      description: "Decentralized talent marketplace with AI matching and trustless smart contract payments."
+    }
+  },
   {
     title: "Offline-first Payment System (Web3)",
     description: "Designed a secure offline transaction flow with deferred blockchain synchronization and AI real-time fraud detection. Built for eventual consistency and privacy.",
@@ -448,19 +514,9 @@ export default function Home() {
               <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
                 Writings & Blogs
               </h2>
-              <p className="w-full text-lg leading-relaxed text-gray-600 dark:text-gray-400">
-                I regularly publish articles on{" "}
-                <a
-                  href="https://medium.com/@dhanushkumaramk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-black dark:text-white underline underline-offset-4 transition-colors hover:text-gray-600 dark:hover:text-gray-300"
-                >
-                  Medium
-                </a>{" "}
-                focusing on system design patterns, microservices, and technical integrations.
-              </p>
+              <BlogCards />
             </div>
+
 
             {/* Developer Values Section */}
             <div className="mb-16 w-full text-left">
@@ -530,28 +586,17 @@ export default function Home() {
 
             {/* Get in Touch Section */}
             <div id="contact" className="mb-16 w-full text-left">
-              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400">
+              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
                 Get in Touch
               </h2>
-              <div className="space-y-4">
-                <p className="text-lg text-gray-600 dark:text-gray-400">
-                  Connect with me on{" "}
-                  <a
-                    href="https://www.linkedin.com/in/dhanushkumar-amk/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-black dark:text-white underline underline-offset-4 hover:text-gray-600 dark:hover:text-gray-300"
-                  >
-                    LinkedIn
-                  </a>{" "}
-                  or{" "} shoot an {" "}
-                  <a
-                    href="mailto:dhanushkumaramk@gmail.com"
-                    className="text-black dark:text-white underline underline-offset-4 hover:text-gray-600 dark:hover:text-gray-300"
-                  >
-                    email
-                  </a>
-                </p>
+              <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
+                Have a project in mind or just want to say hi? Send me a message — I reply within 24 hours.
+              </p>
+              <ContactForm />
+              <div className="mt-6 flex flex-wrap gap-4 text-sm text-gray-400">
+                <a href="https://www.linkedin.com/in/dhanushkumar-amk/" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors underline underline-offset-4">LinkedIn</a>
+                <a href="mailto:dhanushkumaramk@gmail.com" className="hover:text-black dark:hover:text-white transition-colors underline underline-offset-4">dhanushkumaramk@gmail.com</a>
+                <a href="https://github.com/dhanushkumar-amk" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors underline underline-offset-4">GitHub</a>
               </div>
             </div>
 

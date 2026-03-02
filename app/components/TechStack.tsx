@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
+// All slugs verified from simpleicons.org
 const categories = [
     {
         name: "Front-End Development",
@@ -24,7 +25,7 @@ const categories = [
             { name: "Express.js", slug: "express" },
             { name: "TypeScript", slug: "typescript" },
             { name: "Socket.IO", slug: "socketdotio" },
-            { name: "RESTful APIs", slug: "postman" },
+            { name: "REST APIs", slug: "postman" },
         ]
     },
     {
@@ -33,7 +34,7 @@ const categories = [
             { name: "MongoDB", slug: "mongodb" },
             { name: "PostgreSQL", slug: "postgresql" },
             { name: "Redis", slug: "redis" },
-            { name: "Mongoose", slug: "mongoose" },
+            { name: "Prisma", slug: "prisma" },         // replaced mongoose (no icon)
             { name: "Supabase", slug: "supabase" },
         ]
     },
@@ -48,28 +49,53 @@ const categories = [
         ]
     },
     {
-        name: "AI Automation & Technologies",
+        name: "AI & Automation",
         skills: [
             { name: "n8n", slug: "n8n" },
-            { name: "Make.com", slug: "make" },
-            { name: "AI Agents", slug: "openai" },
-            { name: "RAG", slug: "pinecone" },
-            { name: "Vector Databases", slug: "weaviate" },
-            { name: "MCP", slug: "googlecloud" },
-            { name: "Prompt Engineering", slug: "anthropic" },
+            { name: "Make.com", slug: "make" },         // valid on simpleicons
+            { name: "OpenAI", slug: "openai" },
+            { name: "Pinecone", slug: "pinecone" },
+            { name: "LangChain", slug: "langchain" },   // replaced weaviate (no icon)
+            { name: "Google Cloud", slug: "googlecloud" },
+            { name: "Anthropic", slug: "anthropic" },
         ]
     },
     {
-        name: "Other Technical Skills",
+        name: "Other Skills",
         skills: [
-            { name: "DSA (Java)", slug: "java" },
-            { name: "System Design", slug: "diagramsdotnet" },
-            { name: "Microservices", slug: "kubernetes" },
+            { name: "Java", slug: "java" },
+            { name: "Kubernetes", slug: "kubernetes" },
+            { name: "Linux", slug: "linux" },
         ]
     }
 ];
 
 const marqueeSkills = categories.flatMap(c => c.skills);
+
+// Fallback icon — shows first letter if image fails to load
+function SkillIcon({ slug, name, className }: { slug: string; name: string; className?: string }) {
+    const [failed, setFailed] = useState(false);
+
+    if (failed) {
+        return (
+            <div className={`flex items-center justify-center rounded font-bold text-gray-400 bg-gray-100 dark:bg-zinc-800 ${className ?? "h-10 w-10 text-sm"}`}>
+                {name.charAt(0).toUpperCase()}
+            </div>
+        );
+    }
+
+    return (
+        <Image
+            src={`https://cdn.simpleicons.org/${slug}`}
+            alt={name}
+            fill
+            className="object-contain opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 dark:invert dark:hover:invert-0"
+            loading="lazy"
+            unoptimized
+            onError={() => setFailed(true)}
+        />
+    );
+}
 
 export function TechStack() {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -97,34 +123,22 @@ export function TechStack() {
                         className="w-full overflow-hidden mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
                     >
                         <div className="flex w-max animate-infinite-scroll">
+                            {/* First copy */}
                             <div className="flex gap-12 py-4 pr-12">
                                 {marqueeSkills.map((tech, index) => (
                                     <div key={index} className="flex flex-col items-center justify-center gap-2">
                                         <div className="h-10 w-10 transition-all duration-300 relative group/icon">
-                                            <Image
-                                                src={`https://cdn.simpleicons.org/${tech.slug}`}
-                                                alt={tech.name}
-                                                fill
-                                                className="object-contain opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 dark:invert dark:hover:invert-0"
-                                                loading="lazy"
-                                                unoptimized
-                                            />
+                                            <SkillIcon slug={tech.slug} name={tech.name} />
                                         </div>
                                     </div>
                                 ))}
                             </div>
+                            {/* Duplicate for seamless scroll */}
                             <div className="flex gap-12 py-4 pr-12">
                                 {marqueeSkills.map((tech, index) => (
                                     <div key={index + marqueeSkills.length} className="flex flex-col items-center justify-center gap-2">
                                         <div className="h-10 w-10 transition-all duration-300 relative group/icon">
-                                            <Image
-                                                src={`https://cdn.simpleicons.org/${tech.slug}`}
-                                                alt={tech.name}
-                                                fill
-                                                className="object-contain opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 dark:invert dark:hover:invert-0"
-                                                loading="lazy"
-                                                unoptimized
-                                            />
+                                            <SkillIcon slug={tech.slug} name={tech.name} />
                                         </div>
                                     </div>
                                 ))}
@@ -152,7 +166,7 @@ export function TechStack() {
                                                 key={skill.name}
                                                 className="group flex items-center gap-3 rounded-lg border border-transparent p-2 transition-all hover:border-gray-100 dark:hover:border-zinc-800 hover:bg-gray-50/50 dark:hover:bg-zinc-900/50"
                                             >
-                                                <div className="h-5 w-5 shrink-0 transition-all duration-300 relative">
+                                                <div className="h-5 w-5 shrink-0 relative">
                                                     <Image
                                                         src={`https://cdn.simpleicons.org/${skill.slug}`}
                                                         alt={skill.name}
@@ -160,6 +174,10 @@ export function TechStack() {
                                                         className="object-contain opacity-40 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500 dark:invert group-hover:dark:invert-0"
                                                         loading="lazy"
                                                         unoptimized
+                                                        onError={(e) => {
+                                                            // Hide broken image, parent div already shows skill name
+                                                            (e.target as HTMLImageElement).style.display = "none";
+                                                        }}
                                                     />
                                                 </div>
                                                 <span className="text-sm font-medium text-gray-500 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors">
