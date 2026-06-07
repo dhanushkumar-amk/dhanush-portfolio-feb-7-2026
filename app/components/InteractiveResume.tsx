@@ -5,24 +5,44 @@ import { Briefcase, GraduationCap, Calendar, MapPin } from "lucide-react";
 
 const milestones = [
   {
+    type: "experience",
+    title: "Python AI/ML Intern",
+    institution: "Srishti Innovative Computer Systems Pvt Ltd",
+    date: "Jan 2026 - May 2026",
+    location: "Trivandrum, India",
+    description: "Applied Python, scikit-learn, and NLP (NLTK) to student performance models (87% accuracy) and sentiment analysis pipelines, tracked via MLflow.",
+    icon: <Briefcase className="h-4 w-4" />,
+    color: "blue"
+  },
+  {
     type: "education",
     title: "M.Sc. Information Technology",
-    institution: "Hindusthan College of Arts & Science",
+    institution: "Hindusthan College of Arts and Science",
     date: "2025 - Present",
     location: "Coimbatore, India",
-    description: "Focusing on advanced system architecture, data structures, and emerging AI technologies.",
+    description: "Currently pursuing. Focused on advanced computer science principles, database architectures, and emerging AI systems.",
     icon: <GraduationCap className="h-4 w-4" />,
-    color: "blue"
+    color: "emerald"
+  },
+  {
+    type: "experience",
+    title: "Web Developer Intern",
+    institution: "CodeSoft",
+    date: "Dec 2024 - Jan 2025",
+    location: "Remote, India",
+    description: "Developed scalable backend services, implemented REST APIs, and optimized frontend performance in an agile setting.",
+    icon: <Briefcase className="h-4 w-4" />,
+    color: "purple"
   },
   {
     type: "experience",
     title: "Web Developer",
     institution: "CodeTech IT Solution",
-    date: "2024",
-    location: "India",
-    description: "Built scalable web solutions, optimized backend efficiency, and implemented secure authentication flows.",
+    date: "Dec 2024 - Jan 2025",
+    location: "Remote, India",
+    description: "Contributed to scalable web solutions, optimized backend efficiency, and integrated API logic.",
     icon: <Briefcase className="h-4 w-4" />,
-    color: "emerald"
+    color: "amber"
   },
   {
     type: "education",
@@ -30,9 +50,9 @@ const milestones = [
     institution: "Nallamuthu Gounder Mahalingam College",
     date: "2022 - 2025",
     location: "Pollachi, India",
-    description: "Graduated with 7.92 CGPA. Foundation in software engineering and database management.",
+    description: "Graduated with a CGPA of 7.92. Strong foundation in software engineering, Java, and database systems.",
     icon: <GraduationCap className="h-4 w-4" />,
-    color: "purple"
+    color: "pink"
   }
 ];
 

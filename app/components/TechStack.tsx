@@ -1,12 +1,33 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import {
+    ChevronDown, ChevronUp,
+    Brain, ShieldCheck, Blocks, Code2, Server, Database, Layers, GitBranch, Cpu, Zap, Cloud, Terminal,
+    Network, FileSearch, Bot, Plug, Sliders, Sparkles, Activity, ClipboardCheck, Radio, Infinity, Boxes, Binary, ListTodo
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 // All slugs verified from simpleicons.org
 const categories = [
+    {
+        name: "AI & Generative AI",
+        skills: [
+            { name: "LangChain", slug: "langchain" },
+            { name: "LangGraph", slug: "langgraph" },
+            { name: "RAG", slug: "rag" },
+            { name: "Multi-Agent Systems", slug: "multiagentsystems" },
+            { name: "MCP", slug: "mcp" },
+            { name: "Fine-tuning (LoRA/QLoRA)", slug: "huggingface" },
+            { name: "Prompt Engineering", slug: "openai" },
+            { name: "Guardrails AI", slug: "guardrails" },
+            { name: "LangSmith", slug: "langsmith" },
+            { name: "MLflow", slug: "mlflow" },
+            { name: "RAGAS", slug: "ragas" },
+            { name: "Hugging Face", slug: "huggingface" },
+        ]
+    },
     {
         name: "Front-End Development",
         skills: [
@@ -16,6 +37,7 @@ const categories = [
             { name: "React.js", slug: "react" },
             { name: "Next.js", slug: "nextdotjs" },
             { name: "TailwindCSS", slug: "tailwindcss" },
+            { name: "TypeScript", slug: "typescript" },
         ]
     },
     {
@@ -23,77 +45,123 @@ const categories = [
         skills: [
             { name: "Node.js", slug: "nodedotjs" },
             { name: "Express.js", slug: "express" },
-            { name: "TypeScript", slug: "typescript" },
-            { name: "Socket.IO", slug: "socketdotio" },
+            { name: "FastAPI", slug: "fastapi" },
+            { name: "Python", slug: "python" },
             { name: "REST APIs", slug: "postman" },
+            { name: "WebSockets", slug: "socketdotio" },
+            { name: "SSE", slug: "sse" },
         ]
     },
     {
-        name: "Database & ORM",
+        name: "Database & Vector Stores",
         skills: [
             { name: "MongoDB", slug: "mongodb" },
             { name: "PostgreSQL", slug: "postgresql" },
             { name: "Redis", slug: "redis" },
-            { name: "Prisma", slug: "prisma" },         // replaced mongoose (no icon)
-            { name: "Supabase", slug: "supabase" },
+            { name: "Qdrant", slug: "qdrant" },
+            { name: "SQL", slug: "postgresql" },
+            { name: "pgvector", slug: "postgresql" },
         ]
     },
     {
-        name: "DevOps & Tools",
+        name: "DevOps & Cloud",
         skills: [
-            { name: "Git", slug: "git" },
-            { name: "GitHub", slug: "github" },
             { name: "Docker", slug: "docker" },
             { name: "AWS", slug: "amazonaws" },
-            { name: "Postman", slug: "postman" },
-        ]
-    },
-    {
-        name: "AI & Automation",
-        skills: [
-            { name: "n8n", slug: "n8n" },
-            { name: "Make.com", slug: "make" },         // valid on simpleicons
-            { name: "OpenAI", slug: "openai" },
-            { name: "Pinecone", slug: "pinecone" },
-            { name: "LangChain", slug: "langchain" },   // replaced weaviate (no icon)
-            { name: "Google Cloud", slug: "googlecloud" },
-            { name: "Anthropic", slug: "anthropic" },
+            { name: "GitHub Actions", slug: "githubactions" },
+            { name: "Nginx", slug: "nginx" },
+            { name: "CI/CD Pipelines", slug: "git" },
         ]
     },
     {
         name: "Other Skills",
         skills: [
-            { name: "Java", slug: "java" },
-            { name: "Kubernetes", slug: "kubernetes" },
-            { name: "Linux", slug: "linux" },
+            { name: "System Design", slug: "systemdesign" },
+            { name: "Microservices", slug: "kubernetes" },
+            { name: "DSA (Java)", slug: "java" },
+            { name: "Agile Development", slug: "agile" },
         ]
     }
 ];
 
 const marqueeSkills = categories.flatMap(c => c.skills);
 
-// Fallback icon — shows first letter if image fails to load
+function getLucideIcon(name: string) {
+    const n = name.toLowerCase();
+    
+    // AI / Generative AI
+    if (n === "langgraph") return <Network className="h-full w-full text-indigo-500 dark:text-indigo-400" />;
+    if (n === "rag") return <FileSearch className="h-full w-full text-teal-500 dark:text-teal-400" />;
+    if (n.includes("multi-agent")) return <Bot className="h-full w-full text-purple-500 dark:text-purple-400" />;
+    if (n === "mcp") return <Plug className="h-full w-full text-amber-500 dark:text-amber-400" />;
+    if (n.includes("fine-tuning") || n.includes("lora")) return <Sliders className="h-full w-full text-rose-500 dark:text-rose-400" />;
+    if (n.includes("prompt")) return <Sparkles className="h-full w-full text-yellow-500 dark:text-yellow-400" />;
+    if (n.includes("guardrails")) return <ShieldCheck className="h-full w-full text-emerald-500 dark:text-emerald-400" />;
+    if (n === "langsmith") return <Activity className="h-full w-full" />;
+    if (n === "ragas") return <ClipboardCheck className="h-full w-full text-cyan-500 dark:text-cyan-400" />;
+    
+    // Backend & Network
+    if (n.includes("sse")) return <Radio className="h-full w-full text-orange-500" />;
+    if (n.includes("websocket")) return <Zap className="h-full w-full text-blue-500" />;
+    
+    // DevOps / CI/CD
+    if (n.includes("ci/cd") || n.includes("pipeline")) return <Infinity className="h-full w-full text-emerald-500" />;
+    
+    // Engineering Foundations
+    if (n.includes("system design")) return <Layers className="h-full w-full text-cyan-500" />;
+    if (n.includes("microservices")) return <Boxes className="h-full w-full text-rose-500" />;
+    if (n.includes("dsa")) return <Binary className="h-full w-full text-blue-500" />;
+    if (n.includes("agile")) return <ListTodo className="h-full w-full text-amber-500" />;
+    
+    // General Fallbacks
+    if (n.includes("langchain")) return <Brain className="h-full w-full text-emerald-500" />;
+    if (n.includes("html") || n.includes("css") || n.includes("javascript") || n.includes("react") || n.includes("next") || n.includes("tailwind") || n.includes("typescript")) {
+        return <Code2 className="h-full w-full text-blue-500" />;
+    }
+    if (n.includes("node") || n.includes("express") || n.includes("fastapi") || n.includes("api")) {
+        return <Server className="h-full w-full text-green-500" />;
+    }
+    if (n.includes("mongo") || n.includes("postgres") || n.includes("redis") || n.includes("qdrant") || n.includes("sql") || n.includes("vector")) {
+        return <Database className="h-full w-full text-violet-500" />;
+    }
+    if (n.includes("docker") || n.includes("aws") || n.includes("amazon") || n.includes("cloud")) {
+        return <Cloud className="h-full w-full text-sky-500" />;
+    }
+    if (n.includes("git") || n.includes("github")) {
+        return <GitBranch className="h-full w-full text-orange-600" />;
+    }
+    if (n.includes("python") || n.includes("java")) {
+        return <Cpu className="h-full w-full text-yellow-600" />;
+    }
+    return <Terminal className="h-full w-full text-zinc-500" />;
+}
+
+// Fallback icon — shows a beautiful, relevant Lucide icon if image fails to load
 function SkillIcon({ slug, name, className }: { slug: string; name: string; className?: string }) {
     const [failed, setFailed] = useState(false);
 
+    const isInvertedInDark = slug === "nextdotjs" || slug === "express" || slug === "github";
+
     if (failed) {
         return (
-            <div className={`flex items-center justify-center rounded font-bold text-gray-400 bg-gray-100 dark:bg-zinc-800 ${className ?? "h-10 w-10 text-sm"}`}>
-                {name.charAt(0).toUpperCase()}
+            <div className={`flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${className ?? "h-10 w-10"}`}>
+                {getLucideIcon(name)}
             </div>
         );
     }
 
     return (
-        <Image
-            src={`https://cdn.simpleicons.org/${slug}`}
-            alt={name}
-            fill
-            className="object-contain opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 dark:invert dark:hover:invert-0"
-            loading="lazy"
-            unoptimized
-            onError={() => setFailed(true)}
-        />
+        <div className={`relative transition-all duration-300 group-hover:scale-110 ${className ?? "h-10 w-10"}`}>
+            <Image
+                src={`https://cdn.simpleicons.org/${slug}`}
+                alt={name}
+                fill
+                className={`object-contain opacity-90 group-hover:opacity-100 transition-all duration-300 ${isInvertedInDark ? "dark:invert" : ""}`}
+                loading="lazy"
+                unoptimized
+                onError={() => setFailed(true)}
+            />
+        </div>
     );
 }
 
@@ -154,32 +222,19 @@ export function TechStack() {
                         transition={{ duration: 0.4, ease: "circOut" }}
                         className="overflow-hidden"
                     >
-                        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 pt-4">
+                        <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 [column-fill:_balance] w-full pt-4">
                             {categories.map((category) => (
-                                <div key={category.name} className="space-y-4">
+                                <div key={category.name} className="break-inside-avoid mb-8 space-y-4 bg-gray-50/50 dark:bg-zinc-900/10 p-5 rounded-2xl border border-gray-100 dark:border-zinc-800/50 backdrop-blur-xs">
                                     <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 border-b border-gray-100 dark:border-zinc-800 pb-2">
                                         {category.name}
                                     </h3>
-                                    <div className="grid grid-cols-1 gap-2">
+                                    <div className="grid grid-cols-1 gap-1">
                                         {category.skills.map((skill) => (
                                             <div
                                                 key={skill.name}
                                                 className="group flex items-center gap-3 rounded-lg border border-transparent p-2 transition-all hover:border-gray-100 dark:hover:border-zinc-800 hover:bg-gray-50/50 dark:hover:bg-zinc-900/50"
                                             >
-                                                <div className="h-5 w-5 shrink-0 relative">
-                                                    <Image
-                                                        src={`https://cdn.simpleicons.org/${skill.slug}`}
-                                                        alt={skill.name}
-                                                        fill
-                                                        className="object-contain opacity-40 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500 dark:invert group-hover:dark:invert-0"
-                                                        loading="lazy"
-                                                        unoptimized
-                                                        onError={(e) => {
-                                                            // Hide broken image, parent div already shows skill name
-                                                            (e.target as HTMLImageElement).style.display = "none";
-                                                        }}
-                                                    />
-                                                </div>
+                                                <SkillIcon slug={skill.slug} name={skill.name} className="h-5 w-5 shrink-0" />
                                                 <span className="text-sm font-medium text-gray-500 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors">
                                                     {skill.name}
                                                 </span>

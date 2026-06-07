@@ -101,12 +101,12 @@ export const ProjectCard = ({ title, description, tags, githubUrl, liveUrl, type
           {description}
         </p>
 
-        <div className="flex items-center justify-between mt-auto">
-          <div className="flex flex-wrap gap-2">
+        <div className="mt-auto space-y-4">
+          <div className="flex flex-wrap gap-1.5">
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-gray-50 px-3 py-1 text-[10px] font-medium text-gray-500 transition-colors group-hover:bg-blue-50 group-hover:text-blue-600 dark:bg-zinc-800/50 dark:text-zinc-500 dark:group-hover:bg-blue-900/20 dark:group-hover:text-blue-400"
+                className="rounded-full bg-gray-50 px-2.5 py-0.5 text-[9px] font-medium text-gray-500 transition-colors group-hover:bg-blue-50 group-hover:text-blue-600 dark:bg-zinc-800/50 dark:text-zinc-500 dark:group-hover:bg-blue-900/20 dark:group-hover:text-blue-400"
               >
                 {tag}
               </span>
@@ -114,13 +114,15 @@ export const ProjectCard = ({ title, description, tags, githubUrl, liveUrl, type
           </div>
 
           {caseStudy && (
-            <button
-              onClick={() => setIsCaseStudyOpen(true)}
-              className="flex items-center gap-1.5 rounded-lg bg-blue-500/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-blue-600 transition-all hover:bg-blue-500 hover:text-white dark:bg-blue-500/20 dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white"
-            >
-              <BookOpen className="h-3 w-3" />
-              Case Study
-            </button>
+            <div className="flex justify-end pt-3 border-t border-gray-100 dark:border-zinc-800/60">
+              <button
+                onClick={() => setIsCaseStudyOpen(true)}
+                className="flex items-center gap-1.5 rounded-lg bg-blue-500/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-blue-600 transition-all hover:bg-blue-505 hover:bg-blue-500 hover:text-white dark:bg-blue-500/20 dark:text-blue-400 dark:hover:bg-blue-500 dark:hover:text-white cursor-pointer"
+              >
+                <BookOpen className="h-3 w-3" />
+                Case Study
+              </button>
+            </div>
           )}
         </div>
 

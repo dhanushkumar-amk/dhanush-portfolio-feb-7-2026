@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { Github, Linkedin, Bot, User, QrCode, X, Music, Pause, Command, Code, FileDown, ArrowRight } from "lucide-react";
-import { FaXTwitter } from "react-icons/fa6";
 import { GithubGraph } from "./components/GithubGraph";
 import { TechStack } from "./components/TechStack";
 import { useState, useEffect, useRef } from "react";
@@ -18,203 +17,143 @@ import { InteractiveResume } from "./components/InteractiveResume";
 import { CodingStats } from "./components/CodingStats";
 import { ContactForm } from "./components/ContactForm";
 import { BlogCards } from "./components/BlogCards";
+import { ScrollReveal } from "./components/ScrollReveal";
 
 import { getMarkdownContent } from "./data/content";
 
 const projects = [
   {
-    title: "EventMaster – AI-Powered Event Management",
-    description: "A full-stack event management platform with AI-driven attendee analytics, real-time QR check-in, automated notifications, and role-based access control for organizers and attendees.",
-    tags: ["Next.js", "Node.js", "PostgreSQL", "Gemini AI", "Socket.IO"],
-    type: "fullstack" as const,
+    title: "ResearchMind — Agentic RAG Research & Document Intelligence",
+    description: "Agentic research assistant with a 5-agent LangGraph workflow, multi-source retrieval, and secure document intelligence pipelines.",
+    tags: ["LangGraph", "LangChain", "Qdrant", "LiteLLM", "Groq", "Gemini", "React.js", "PostgreSQL", "Redis", "Docker", "AWS"],
+    type: "system" as const,
+    status: "Completed",
+    githubUrl: "https://github.com/dhanushkumar-amk/ResearchMind",
+    caseStudy: {
+      problem: "Researchers and developers spend hours manually querying and cross-referencing papers, documentation, and web sources, leading to fragmented information retrieval and slow knowledge synthesis.",
+      solution: "Architected a 5-agent LangGraph system with a parallel Search Swarm (arXiv, PubMed, GitHub, Tavily) and Critic-reviewed RAG Vault, guaranteeing structured and evaluated research reports.",
+      architecture: ["LangGraph", "LangChain", "Qdrant", "LiteLLM", "Groq", "Gemini", "React.js", "PostgreSQL", "Redis", "Docker", "AWS"],
+      impact: "Delivers sub-80ms semantic retrieval with Gemini failovers, ensuring research summaries maintain high accuracy (scored ≥7/10 by Critic Agent) under 3.5s first-token latency."
+    },
+    blueprint: {
+      nodes: [
+        { x: 100, y: 225, label: "Input Query", iconType: "globe", color: "blue" },
+        { x: 280, y: 120, label: "Search Swarm", iconType: "cpu", color: "emerald" },
+        { x: 280, y: 330, label: "RAG Vault", iconType: "database", color: "purple" },
+        { x: 480, y: 225, label: "Critic Agent", iconType: "shield", color: "amber" },
+        { x: 680, y: 225, label: "SSE Streaming", iconType: "network", color: "blue" }
+      ],
+      connections: [
+        { from: [100, 225] as [number, number], to: [280, 120] as [number, number], label: "ROUTE_QUERY", delay: 0.2 },
+        { from: [100, 225] as [number, number], to: [280, 330] as [number, number], label: "SEMANTIC_SRCH", delay: 0.4 },
+        { from: [280, 120] as [number, number], to: [480, 225] as [number, number], label: "EVALUATE", delay: 0.6 },
+        { from: [280, 330] as [number, number], to: [480, 225] as [number, number], label: "RETRIEVE", delay: 0.8 },
+        { from: [480, 225] as [number, number], to: [680, 225] as [number, number], label: "STREAM_RESP", delay: 1.0 }
+      ],
+      metrics: { latency: "<3.5s", throughput: "Sub-80ms search" },
+      description: "Multi-agent LangGraph orchestration with parallel Search Swarm, Critic-based validation, and PostgreSQL telemetry."
+    }
+  },
+  {
+    title: "GuardLayer — Open Source Self-Hostable LLM Security Gateway",
+    description: "Self-hostable LLM security gateway with prompt-injection defense, PII scrubbing, output moderation, and API-key level auditing.",
+    tags: ["Node.js", "TypeScript", "Python", "FastAPI", "Guardrails AI", "Presidio", "Hugging Face", "Redis", "PostgreSQL", "Docker", "AWS"],
+    type: "system" as const,
+    status: "Completed",
+    githubUrl: "https://github.com/dhanushkumar-amk/GuardLayer",
+    caseStudy: {
+      problem: "Enterprise LLM applications are highly vulnerable to prompt injections, jailbreaks, and sensitive data leakage (PII), but inline validation often introduces severe latency overhead.",
+      solution: "Designed a microservices-based security gateway consisting of Input/Output guards and API Gateway layers built with FastAPI and Presidio, caching threat patterns for fast lookups.",
+      architecture: ["FastAPI", "Guardrails AI", "Microsoft Presidio", "Hugging Face", "Redis", "PostgreSQL", "Docker", "AWS"],
+      impact: "Achieved reliable prompt injection defense with under 50ms processing overhead, enforcing data scrubbing and real-time threat auditing at the API key level."
+    },
+    blueprint: {
+      nodes: [
+        { x: 120, y: 225, label: "Client Request", iconType: "globe", color: "blue" },
+        { x: 300, y: 150, label: "Input Guard", iconType: "shield", color: "rose" },
+        { x: 300, y: 300, label: "Output Guard", iconType: "cpu", color: "emerald" },
+        { x: 500, y: 225, label: "LLM Gateway", iconType: "network", color: "purple" },
+        { x: 700, y: 225, label: "Telemetry DB", iconType: "database", color: "blue" }
+      ],
+      connections: [
+        { from: [120, 225] as [number, number], to: [300, 150] as [number, number], label: "SCRUB_PII", delay: 0.2 },
+        { from: [300, 150] as [number, number], to: [500, 225] as [number, number], label: "SAFE_PROMPT", delay: 0.4 },
+        { from: [500, 225] as [number, number], to: [300, 300] as [number, number], label: "MODERATE", delay: 0.6 },
+        { from: [300, 300] as [number, number], to: [700, 225] as [number, number], label: "AUDIT_LOGS", delay: 0.8 }
+      ],
+      metrics: { latency: "<50ms", throughput: "100% Scrubbing" },
+      description: "Self-hostable LLM security gateway enforcing real-time prompt validation and output moderation."
+    }
+  },
+  {
+    title: "Distributed Queue Engine — Production Job Queue System",
+    description: "Production-ready job queue with atomic Redis operations, priority scheduling, retry strategies, and real-time monitoring.",
+    tags: ["Node.js", "TypeScript", "Redis", "React.js", "Socket.IO", "Docker", "AWS"],
+    type: "backend" as const,
+    status: "Completed",
+    githubUrl: "https://github.com/dhanushkumar-amk/Distributed-Queue-Engine",
+    caseStudy: {
+      problem: "High-volume distributed worker environments struggle with race conditions during state transitions and job duplication, resulting in slow background tasks and poor scaling.",
+      solution: "Implemented atomic Lua scripts inside a Redis cluster to enforce race-free state transitions, featuring multi-level priority queues, sliding-window rate limiters, and worker heartbeat checks.",
+      architecture: ["Node.js", "TypeScript", "Redis", "Socket.IO", "React.js", "Docker"],
+      impact: "Enables horizontally scalable workers with sub-12ms event loop latency and real-time Socket.IO dashboard monitoring."
+    },
+    blueprint: {
+      nodes: [
+        { x: 120, y: 225, label: "Job Publisher", iconType: "globe", color: "blue" },
+        { x: 320, y: 225, label: "Redis Lua", iconType: "database", color: "rose" },
+        { x: 520, y: 150, label: "Worker Swarm", iconType: "cpu", color: "emerald" },
+        { x: 520, y: 300, label: "Socket.IO", iconType: "network", color: "purple" },
+        { x: 720, y: 225, label: "React Dashboard", iconType: "globe", color: "blue" }
+      ],
+      connections: [
+        { from: [120, 225] as [number, number], to: [320, 225] as [number, number], label: "ENQUEUE", delay: 0.2 },
+        { from: [320, 225] as [number, number], to: [520, 150] as [number, number], label: "DEQUEUE", delay: 0.4 },
+        { from: [320, 225] as [number, number], to: [520, 300] as [number, number], label: "PUSH_STATS", delay: 0.6 },
+        { from: [520, 300] as [number, number], to: [720, 225] as [number, number], label: "RENDER", delay: 0.8 }
+      ],
+      metrics: { latency: "12ms", throughput: "5,000+ jobs/s" },
+      description: "Distributed task orchestrator with atomicity guarantees via Redis Lua, Socket.IO monitoring, and worker heartbeat management."
+    }
+  },
+  {
+    title: "Spotify Clone (Microservices)",
+    description: "A real-time music streaming application built with MERN and microservices architecture. Demonstrates distributed systems design, real-time communication, and load balancing.",
+    tags: ["MongoDB", "Express.js", "React.js", "Node.js", "WebSockets", "Redis", "Docker", "CI/CD"],
+    type: "backend" as const,
     status: "Completed",
     githubUrl: "https://github.com/dhanushkumar-amk",
     caseStudy: {
-      problem: "Event organizers struggle with manual check-ins, scattered attendee data, and no real-time insights during live events — leading to poor attendee experience.",
-      solution: "Built a centralized event platform with QR-based check-in scanner, live attendee dashboard, AI-powered feedback analysis, and automated email/SMS reminders using Node.js cron jobs.",
-      architecture: ["Next.js", "Node.js", "PostgreSQL", "Gemini AI", "Socket.IO", "Nodemailer"],
-      impact: "Reduced manual check-in time by 80%, enabled real-time capacity tracking, and automated 100% of post-event feedback collection for organizers."
+      problem: "Monolithic media applications suffer from scaling issues, where high-traffic real-time chat and music streaming disrupt core browsing services.",
+      solution: "Refactored the application into isolated microservices (Chat, Streaming, Catalog) utilizing Redis caching for non-volatile metadata and WebSockets for active chat synchronization.",
+      architecture: ["Node.js", "Express.js", "MongoDB", "Redis", "Socket.IO", "React.js", "Docker", "CI/CD"],
+      impact: "Achieved ~60% latency reduction under heavy concurrent loads, handling over 5,000 active WebSocket connections."
     },
     blueprint: {
       nodes: [
-        { x: 120, y: 225, label: "Attendee App", iconType: "globe", color: "blue" },
-        { x: 300, y: 150, label: "QR Scanner", iconType: "cpu", color: "emerald" },
-        { x: 300, y: 300, label: "AI Engine", iconType: "zap", color: "purple" },
-        { x: 500, y: 225, label: "API Server", iconType: "network", color: "amber" },
-        { x: 700, y: 225, label: "PostgreSQL", iconType: "database", color: "blue" }
-      ],
-      connections: [
-        { from: [120, 225] as [number, number], to: [300, 150] as [number, number], label: "QR_SCAN", delay: 0.2 },
-        { from: [120, 225] as [number, number], to: [300, 300] as [number, number], label: "FEEDBACK", delay: 0.4 },
-        { from: [300, 150] as [number, number], to: [500, 225] as [number, number], label: "VERIFY", delay: 0.6 },
-        { from: [300, 300] as [number, number], to: [500, 225] as [number, number], label: "AI_RESP", delay: 0.8 },
-        { from: [500, 225] as [number, number], to: [700, 225] as [number, number], label: "PERSIST", delay: 1.0 }
-      ],
-      metrics: { latency: "18ms", throughput: "500 CHECK-INS/M" },
-      description: "Real-time event operations with AI feedback analysis and live attendee tracking."
-    }
-  },
-  {
-    title: "P-DEX – Decentralized AI Talent Network",
-    description: "A Web3-based decentralized talent marketplace where developers list skills as on-chain profiles, AI matches them to projects, and payments are handled via smart contracts.",
-    tags: ["Web3", "Solidity", "Next.js", "Gemini AI", "IPFS"],
-    type: "system" as const,
-    status: "In Progress",
-    githubUrl: "https://github.com/dhanushkumar-amk",
-    caseStudy: {
-      problem: "Freelance platforms take 20–30% commission, have centralized control over talent data, and lack transparent payment guarantees — creating distrust between clients and developers.",
-      solution: "Built a decentralized platform where talent profiles are stored on IPFS, smart contracts escrow payments, and Gemini AI matches developer skill vectors to project requirements.",
-      architecture: ["Solidity", "Next.js", "IPFS", "Gemini AI", "Hardhat", "Ethers.js"],
-      impact: "Eliminates platform commissions, provides trustless milestone payments, and uses AI matching to reduce hiring time by 60% compared to traditional platforms."
-    },
-    blueprint: {
-      nodes: [
-        { x: 100, y: 225, label: "Dev Profile", iconType: "globe", color: "emerald" },
-        { x: 300, y: 150, label: "AI Matcher", iconType: "cpu", color: "purple" },
-        { x: 300, y: 300, label: "IPFS Store", iconType: "database", color: "blue" },
-        { x: 500, y: 225, label: "Smart Contract", iconType: "shield", color: "amber" },
-        { x: 700, y: 225, label: "Blockchain", iconType: "network", color: "rose" }
-      ],
-      connections: [
-        { from: [100, 225] as [number, number], to: [300, 150] as [number, number], label: "SKILL_VEC", delay: 0.2 },
-        { from: [100, 225] as [number, number], to: [300, 300] as [number, number], label: "IPFS_PIN", delay: 0.4 },
-        { from: [300, 150] as [number, number], to: [500, 225] as [number, number], label: "MATCH_SCORE", delay: 0.6 },
-        { from: [300, 300] as [number, number], to: [500, 225] as [number, number], label: "CID_HASH", delay: 0.8 },
-        { from: [500, 225] as [number, number], to: [700, 225] as [number, number], label: "ESCROW_TX", delay: 1.0 }
-      ],
-      metrics: { latency: "2.1s", throughput: "0% Commission" },
-      description: "Decentralized talent marketplace with AI matching and trustless smart contract payments."
-    }
-  },
-  {
-    title: "Offline-first Payment System (Web3)",
-    description: "Designed a secure offline transaction flow with deferred blockchain synchronization and AI real-time fraud detection. Built for eventual consistency and privacy.",
-    tags: ["Web3", "Blockchain", "AI", "Mobile"],
-    type: "system" as const,
-    status: "Currently Doing",
-    caseStudy: {
-      problem: "Traditional Web3 payments require constant internet connectivity, making them unusable in low-signal areas or for instant retail transactions where network latency is high.",
-      solution: "Implemented an offline-first architecture using local SQLite storage and a deferred synchronization engine that batches transactions for blockchain commitment once 'online' status is confirmed.",
-      architecture: ["SQLite", "Solidity", "Node.js", "Redis"],
-      impact: "Achieved zero-latency 'tap and go' checkout experience with 99.9% consistency between offline state and on-chain records."
-    },
-    blueprint: {
-      nodes: [
-        { x: 150, y: 225, label: "Client App", iconType: "globe", color: "blue" },
-        { x: 300, y: 150, label: "AI Engine", iconType: "cpu", color: "purple" },
-        { x: 300, y: 300, label: "Edge DB", iconType: "database", color: "emerald" },
-        { x: 500, y: 225, label: "Orchestrator", iconType: "network", color: "amber" },
-        { x: 700, y: 225, label: "Blockchain", iconType: "shield", color: "rose" }
-      ],
-      connections: [
-        { from: [150, 225] as [number, number], to: [300, 150] as [number, number], label: "ASYNC_REQ", delay: 0.2 },
-        { from: [150, 225] as [number, number], to: [300, 300] as [number, number], label: "LOCAL_SYNC", delay: 0.4 },
-        { from: [300, 150] as [number, number], to: [500, 225] as [number, number], label: "FRAUD_VAL", delay: 0.6 },
-        { from: [300, 300] as [number, number], to: [500, 225] as [number, number], label: "POST_TX", delay: 0.8 },
-        { from: [500, 225] as [number, number], to: [700, 225] as [number, number], label: "L1_COMMIT", delay: 1.0 }
-      ],
-      metrics: { latency: "14.2ms", throughput: "84.2 TPS" },
-      description: "Illustrates the eventual consistency model with offline-first capabilities and AI-driven fraud mitigation."
-    }
-  },
-  {
-    title: "AI-Powered Cloud IDE",
-    description: "A Cursor-inspired IDE with real-time code completion, collaborative multi-language support, and containerized backend services using Docker.",
-    tags: ["Next.js", "Docker", "LLM", "Socket.IO"],
-    type: "fullstack" as const,
-    caseStudy: {
-      problem: "Cloud-based IDEs often suffer from input lag and difficult-to-manage development environments when working across multiple projects.",
-      solution: "Built a containerized service discovery layer that spins up isolated Docker environments for each session, integrated with Gemini AI for low-latency code reasoning.",
-      architecture: ["Next.js", "Docker", "Go", "Gemini AI"],
-      impact: "Reduced local machine CPU overhead by 40% while providing professional-grade AI pairs directly in the browser."
-    },
-    blueprint: {
-      nodes: [
-        { x: 150, y: 225, label: "Editor UI", iconType: "globe", color: "blue" },
-        { x: 350, y: 225, label: "API Gateway", iconType: "network", color: "zinc" },
-        { x: 550, y: 150, label: "AI Backend", iconType: "cpu", color: "purple" },
-        { x: 550, y: 300, label: "Docker Swarm", iconType: "box", color: "emerald" },
-        { x: 750, y: 225, label: "Env Storage", iconType: "database", color: "blue" }
-      ],
-      connections: [
-        { from: [150, 225] as [number, number], to: [350, 225] as [number, number], label: "WEBSOCKET", delay: 0.2 },
-        { from: [350, 225] as [number, number], to: [550, 150] as [number, number], label: "inference_v1", delay: 0.4 },
-        { from: [350, 225] as [number, number], to: [550, 300] as [number, number], label: "provision", delay: 0.6 },
-        { from: [550, 300] as [number, number], to: [750, 225] as [number, number], label: "PERSIST", delay: 0.8 }
-      ],
-      metrics: { latency: "28.5ms", throughput: "120 REQ/S" },
-      description: "Architecture for real-time collaborative editing with automated environment provisioning."
-    }
-  },
-  {
-    title: "Spotichat",
-    description: "Architected a microservices-based music streaming platform with real-time chat via WebSockets. Improved performance by 60% through Redis caching.",
-    tags: ["Microservices", "Redis", "Socket.IO", "React"],
-    type: "backend" as const,
-    caseStudy: {
-      problem: "High-traffic music platforms face huge latency spikes when simultaneous users query live track lists and real-time chat messages.",
-      solution: "Implemented a Pub/Sub model using Redis for chat distribution and an aggressive caching strategy for non-volatile metadata, offloading 70% of database pressure.",
-      architecture: ["Node.js", "Redis", "PostgreSQL", "React"],
-      impact: "Handled 5,000+ concurrent connections per instance with sub-50ms response times for all real-time events."
-    },
-    blueprint: {
-      nodes: [
-        { x: 100, y: 225, label: "Subscribers", iconType: "globe", color: "emerald" },
+        { x: 100, y: 225, label: "Users", iconType: "globe", color: "blue" },
         { x: 300, y: 225, label: "Load Balancer", iconType: "network", color: "zinc" },
         { x: 500, y: 120, label: "Chat Service", iconType: "message", color: "blue" },
         { x: 500, y: 330, label: "Music Service", iconType: "zap", color: "amber" },
-        { x: 700, y: 225, label: "Redis Cluster", iconType: "database", color: "rose" }
+        { x: 700, y: 225, label: "Redis Cache", iconType: "database", color: "rose" }
       ],
       connections: [
-        { from: [100, 225] as [number, number], to: [300, 225] as [number, number], label: "TLS_REQ", delay: 0.1 },
-        { from: [300, 225] as [number, number], to: [500, 120] as [number, number], label: "PUSH", delay: 0.3 },
-        { from: [300, 225] as [number, number], to: [500, 330] as [number, number], label: "STREAM", delay: 0.5 },
+        { from: [100, 225] as [number, number], to: [300, 225] as [number, number], label: "REQUESTS", delay: 0.1 },
+        { from: [300, 225] as [number, number], to: [500, 120] as [number, number], label: "CHAT_CONN", delay: 0.3 },
+        { from: [300, 225] as [number, number], to: [500, 330] as [number, number], label: "STREAM_REQ", delay: 0.5 },
         { from: [500, 120] as [number, number], to: [700, 225] as [number, number], label: "PUB_SUB", delay: 0.7 },
-        { from: [500, 330] as [number, number], to: [700, 225] as [number, number], label: "CACHE", delay: 0.9 }
+        { from: [500, 330] as [number, number], to: [700, 225] as [number, number], label: "CACHE_READ", delay: 0.9 }
       ],
-      metrics: { latency: "12ms", throughput: "5.2k CONN" },
-      description: "Microservices design for high-scale real-time audio and message distribution."
-    }
-  },
-  {
-    title: "AI Financial Intelligence",
-    description: "Integrated Gemini AI for automatic receipt scanning and expense categorization. Developed automated reminder and notification system.",
-    tags: ["Gemini AI", "Node.js", "Automation", "Finance"],
-    type: "fullstack" as const,
-    caseStudy: {
-      problem: "User spending data is often scattered across physical receipts and multiple bank emails, making manual budgeting painful and error-prone.",
-      solution: "Developed an OCR pipeline backed by Gemini AI to extract entities from multi-format inputs and a graph-based categorization engine for spent-analysis.",
-      architecture: ["Node.js", "Gemini AI", "Puppeteer", "Express"],
-      impact: "Automated 95% of budgeting tasks for pilot users, identifying an average of 12% in 'hidden' subscription waste."
-    },
-    blueprint: {
-      nodes: [
-        { x: 150, y: 225, label: "Receipt Ingest", iconType: "globe", color: "zinc" },
-        { x: 350, y: 225, label: "OCR Engine", iconType: "cpu", color: "blue" },
-        { x: 550, y: 225, label: "Gemini AI", iconType: "zap", color: "purple" },
-        { x: 750, y: 150, label: "Auth DB", iconType: "shield", color: "emerald" },
-        { x: 750, y: 300, label: "Fin Analytics", iconType: "database", color: "blue" }
-      ],
-      connections: [
-        { from: [150, 225] as [number, number], to: [350, 225] as [number, number], label: "PDF_BUFFER", delay: 0.2 },
-        { from: [350, 225] as [number, number], to: [550, 225] as [number, number], label: "ENTITY_EXT", delay: 0.4 },
-        { from: [550, 225] as [number, number], to: [750, 150] as [number, number], label: "VERIFY", delay: 0.6 },
-        { from: [550, 225] as [number, number], to: [750, 300] as [number, number], label: "MAP_STATE", delay: 0.8 }
-      ],
-      metrics: { latency: "1.2s", throughput: "45 SCAN/M" },
-      description: "AI-driven entity extraction pipeline for automated financial reconciliation."
+      metrics: { latency: "<50ms", throughput: "5.2k Active Conn" },
+      description: "Microservices audio delivery system with WebSocket-based chat channels and Redis memory caching."
     }
   }
 ];
-
-
 
 export default function Home() {
   const [time, setTime] = useState<string>("");
   const [showQR, setShowQR] = useState(false);
   const [mode, setMode] = useState<"human" | "agent">("human");
-
-
 
   useEffect(() => {
     const updateTime = () => {
@@ -421,17 +360,17 @@ export default function Home() {
             {/* Hero Intro */}
             <div className="w-full space-y-4 text-left text-base leading-relaxed text-gray-600 dark:text-gray-400 sm:text-lg md:text-xl mb-12">
               <p>
-                a full-stack developer and <a href="https://en.wikipedia.org/wiki/System_design" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-black dark:hover:text-white transition-colors">system design enthusiast</a> passionate about building scalable, production-ready applications.
+                an <a href="https://en.wikipedia.org/wiki/Artificial_intelligence" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-black dark:hover:text-white transition-colors">AI Engineer</a> and full-stack developer passionate about building intelligent, production-grade applications.
               </p>
               <p>
-                specializing in <span className="text-black dark:text-white font-medium">Backend Architecture</span>, AI Agents, and Web3, bridging the gap between complex logic and user-centric design.
+                specializing in <span className="text-black dark:text-white font-medium">RAG, Multi-Agent Systems</span>, FastAPI, MERN, and AWS, bridging the gap between advanced models and scalable backend engineering.
               </p>
 
               <div className="flex flex-wrap items-center justify-start gap-4 pt-4">
                 <a
-                  href="/RESUME_PROJECT_30_MAY_2025.pdf"
+                  href="/Dhanushkumar_Resume.pdf"
                   download="Dhanush_Kumar_Resume"
-                  className="flex items-center gap-2 rounded-full bg-black px-6 py-3 text-sm font-medium text-white transition-all hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                  className="flex items-center gap-2 rounded-full bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 px-6 py-3 text-sm font-semibold !text-white dark:!text-black transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer shadow-sm"
                 >
                   <FileDown className="h-4 w-4" />
                   Download CV
@@ -450,155 +389,175 @@ export default function Home() {
             </div>
 
             {/* About Me Section (Professional Summary) */}
-            <div className="mb-24 w-full text-left">
-              <h2 className="mb-12 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 text-center">
-                About Me
-              </h2>
-              <div className="mx-auto max-w-2xl rounded-3xl border border-gray-100 dark:border-zinc-800 p-8 sm:p-12 text-center bg-gray-50/50 dark:bg-zinc-900/30 backdrop-blur-sm">
-                <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl mb-6">
-                  I am a high-performance engineer focused on building resilient systems that bridge the gap between complex backend logic and seamless user experiences. I thrive on solving architectural challenges and optimizing for speed and scale.
-                </p>
-                <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl italic font-medium">
-                  &quot;Architecting the future, one microservice at a time.&quot;
-                </p>
+            <ScrollReveal>
+              <div className="mb-24 w-full text-left">
+                <h2 className="mb-12 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 text-center">
+                  About Me
+                </h2>
+                <div className="mx-auto max-w-2xl rounded-3xl border border-gray-100 dark:border-zinc-800 p-8 sm:p-12 text-center bg-gray-50/50 dark:bg-zinc-900/30 backdrop-blur-sm">
+                  <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl mb-6">
+                    Results-driven AI Engineer and Full Stack Developer with hands-on experience building production-grade LLM applications, multi-agent systems, and distributed backend architectures. I enjoy turning complex ideas into practical, measurable products.
+                  </p>
+                  <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl italic font-medium">
+                    &quot;Building the next generation of intelligent systems, one agent at a time.&quot;
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* Technical Expertise (Skills) */}
-            <div className="mb-24 w-full text-left">
-              <h2 className="mb-8 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 text-center">
-                Technical Expertise
-              </h2>
-              <TechStack />
-            </div>
+            <ScrollReveal>
+              <div className="mb-24 w-full text-left">
+                <h2 className="mb-8 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 text-center">
+                  Technical Expertise
+                </h2>
+                <TechStack />
+              </div>
+            </ScrollReveal>
 
             {/* The Chronicle (Education & Experience) */}
-            <div className="mb-24 w-full text-left">
-              <h2 className="mb-12 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 text-center">
-                The Chronicle
-              </h2>
-              <InteractiveResume />
-            </div>
+            <ScrollReveal>
+              <div className="mb-24 w-full text-left">
+                <h2 className="mb-12 text-xs font-bold uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 text-center">
+                  The Chronicle
+                </h2>
+                <InteractiveResume />
+              </div>
+            </ScrollReveal>
 
             {/* Product Building Journey (Projects) */}
-            <div className="mb-24 w-full text-left">
-              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                The Product Building Journey
-              </h2>
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                {projects.map((project, idx) => (
-                  <ProjectCard key={idx} {...project} />
-                ))}
+            <ScrollReveal>
+              <div className="mb-24 w-full text-left">
+                <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                  The Product Building Journey
+                </h2>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  {projects.map((project, idx) => (
+                    <ProjectCard key={idx} {...project} />
+                  ))}
+                </div>
+                <p className="mt-8 text-center font-medium italic text-gray-400 dark:text-zinc-600">
+                  &quot;Consistent building is the only way to master the machine.&quot;
+                </p>
               </div>
-              <p className="mt-8 text-center font-medium italic text-gray-400 dark:text-zinc-600">
-                &quot;Consistent building is the only way to master the machine.&quot;
-              </p>
-            </div>
+            </ScrollReveal>
 
             {/* Achievements Section */}
-            <div className="mb-16 w-full text-left">
-              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                Achievements & Stats
-              </h2>
-              <CodingStats />
-            </div>
+            <ScrollReveal>
+              <div className="mb-16 w-full text-left">
+                <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                  Achievements & Stats
+                </h2>
+                <CodingStats />
+              </div>
+            </ScrollReveal>
 
             {/* Status Board Section */}
-            <div className="mb-16 w-full text-left">
-              <StatusBoard />
-            </div>
-
+            <ScrollReveal>
+              <div className="mb-16 w-full text-left">
+                <StatusBoard />
+              </div>
+            </ScrollReveal>
 
             {/* Writings & Blogs Section */}
-            <div className="mb-16 w-full text-left">
-              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                Writings & Blogs
-              </h2>
-              <BlogCards />
-            </div>
-
+            <ScrollReveal>
+              <div className="mb-16 w-full text-left">
+                <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                  Writings & Blogs
+                </h2>
+                <BlogCards />
+              </div>
+            </ScrollReveal>
 
             {/* Developer Values Section */}
-            <div className="mb-16 w-full text-left">
-              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                Core Philosophy
-              </h2>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <div className="rounded-xl border border-gray-100 dark:border-zinc-800 p-6 transition-all hover:bg-gray-50 dark:hover:bg-zinc-900/50">
-                  <h3 className="font-bold text-black dark:text-white mb-2">Pragmatism</h3>
-                  <p className="text-xs text-gray-500 leading-relaxed">Choosing the right tool for the job, over the trendiest one. Focus on shipping value.</p>
-                </div>
-                <div className="rounded-xl border border-gray-100 dark:border-zinc-800 p-6 transition-all hover:bg-gray-50 dark:hover:bg-zinc-900/50">
-                  <h3 className="font-bold text-black dark:text-white mb-2">Scalability</h3>
-                  <p className="text-xs text-gray-500 leading-relaxed">Designing systems that don&apos;t just work today, but grow with the user base effortlessly.</p>
-                </div>
-                <div className="rounded-xl border border-gray-100 dark:border-zinc-800 p-6 transition-all hover:bg-gray-50 dark:hover:bg-zinc-900/50">
-                  <h3 className="font-bold text-black dark:text-white mb-2">Resilience</h3>
-                  <p className="text-xs text-gray-500 leading-relaxed">Building with failure in mind. Graceful degradation and robust error handling as standards.</p>
+            <ScrollReveal>
+              <div className="mb-16 w-full text-left">
+                <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                  Core Philosophy
+                </h2>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                  <div className="rounded-xl border border-gray-100 dark:border-zinc-800 p-6 transition-all hover:bg-gray-50 dark:hover:bg-zinc-900/50">
+                    <h3 className="font-bold text-black dark:text-white mb-2">Pragmatism</h3>
+                    <p className="text-xs text-gray-500 leading-relaxed">Choosing the right tool for the job, over the trendiest one. Focus on shipping value.</p>
+                  </div>
+                  <div className="rounded-xl border border-gray-100 dark:border-zinc-800 p-6 transition-all hover:bg-gray-50 dark:hover:bg-zinc-900/50">
+                    <h3 className="font-bold text-black dark:text-white mb-2">Scalability</h3>
+                    <p className="text-xs text-gray-500 leading-relaxed">Designing systems that don&apos;t just work today, but grow with the user base effortlessly.</p>
+                  </div>
+                  <div className="rounded-xl border border-gray-100 dark:border-zinc-800 p-6 transition-all hover:bg-gray-50 dark:hover:bg-zinc-900/50">
+                    <h3 className="font-bold text-black dark:text-white mb-2">Resilience</h3>
+                    <p className="text-xs text-gray-500 leading-relaxed">Building with failure in mind. Graceful degradation and robust error handling as standards.</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* Contributions Section */}
-            <div className="mb-16 w-full text-left">
-              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                GitHub Contributions
-              </h2>
-              <GithubGraph />
-            </div>
+            <ScrollReveal>
+              <div className="mb-16 w-full text-left">
+                <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                  GitHub Contributions
+                </h2>
+                <GithubGraph />
+              </div>
+            </ScrollReveal>
 
             {/* Hobbies / Human Perspective Section */}
-            <div className="mb-16 w-full text-left">
-              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                The Human Perspective
-              </h2>
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                <div className="flex flex-col gap-2 rounded-xl border border-gray-100 dark:border-zinc-800 p-6 bg-white/50 dark:bg-zinc-900/20 backdrop-blur-sm transition-all hover:bg-white dark:hover:bg-zinc-900/30">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-2xl">♟️</span>
-                    <div className="grid grid-cols-2 gap-0.5 opacity-40">
-                      <div className="w-1.5 h-1.5 bg-black dark:bg-white"></div>
-                      <div className="w-1.5 h-1.5 bg-gray-300 dark:bg-zinc-700"></div>
-                      <div className="w-1.5 h-1.5 bg-gray-300 dark:bg-zinc-700"></div>
-                      <div className="w-1.5 h-1.5 bg-black dark:bg-white"></div>
+            <ScrollReveal>
+              <div className="mb-16 w-full text-left">
+                <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                  The Human Perspective
+                </h2>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="flex flex-col gap-2 rounded-xl border border-gray-100 dark:border-zinc-800 p-6 bg-white/50 dark:bg-zinc-900/20 backdrop-blur-sm transition-all hover:bg-white dark:hover:bg-zinc-900/30">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-2xl">♟️</span>
+                      <div className="grid grid-cols-2 gap-0.5 opacity-40">
+                        <div className="w-1.5 h-1.5 bg-black dark:bg-white"></div>
+                        <div className="w-1.5 h-1.5 bg-gray-300 dark:bg-zinc-700"></div>
+                        <div className="w-1.5 h-1.5 bg-gray-300 dark:bg-zinc-700"></div>
+                        <div className="w-1.5 h-1.5 bg-black dark:bg-white"></div>
+                      </div>
                     </div>
+                    <h3 className="font-bold text-sm">Chess</h3>
+                    <p className="text-xs text-gray-500">Strategy & logic.</p>
                   </div>
-                  <h3 className="font-bold text-sm">Chess</h3>
-                  <p className="text-xs text-gray-500">Strategy & logic.</p>
-                </div>
-                <div className="flex flex-col gap-2 rounded-xl border border-gray-100 dark:border-zinc-800 p-6 bg-white/50 dark:bg-zinc-900/20 backdrop-blur-sm">
-                  <span className="text-2xl">📈</span>
-                  <h3 className="font-bold text-sm">Trading</h3>
-                  <p className="text-xs text-gray-500">Market analysis.</p>
-                </div>
-                <div className="flex flex-col gap-2 rounded-xl border border-gray-100 dark:border-zinc-800 p-6 bg-white/50 dark:bg-zinc-900/20 backdrop-blur-sm">
-                  <span className="text-2xl">🎬</span>
-                  <h3 className="font-bold text-sm">Cinema</h3>
-                  <p className="text-xs text-gray-500">Visual storytelling.</p>
-                </div>
-                <div className="flex flex-col gap-2 rounded-xl border border-gray-100 dark:border-zinc-800 p-6 bg-white/50 dark:bg-zinc-900/20 backdrop-blur-sm">
-                  <span className="text-2xl">🎵</span>
-                  <h3 className="font-bold text-sm">Music</h3>
-                  <p className="text-xs text-gray-500">Focus & flow.</p>
+                  <div className="flex flex-col gap-2 rounded-xl border border-gray-100 dark:border-zinc-800 p-6 bg-white/50 dark:bg-zinc-900/20 backdrop-blur-sm">
+                    <span className="text-2xl">📈</span>
+                    <h3 className="font-bold text-sm">Trading</h3>
+                    <p className="text-xs text-gray-500">Market analysis.</p>
+                  </div>
+                  <div className="flex flex-col gap-2 rounded-xl border border-gray-100 dark:border-zinc-800 p-6 bg-white/50 dark:bg-zinc-900/20 backdrop-blur-sm">
+                    <span className="text-2xl">🎬</span>
+                    <h3 className="font-bold text-sm">Cinema</h3>
+                    <p className="text-xs text-gray-500">Visual storytelling.</p>
+                  </div>
+                  <div className="flex flex-col gap-2 rounded-xl border border-gray-100 dark:border-zinc-800 p-6 bg-white/50 dark:bg-zinc-900/20 backdrop-blur-sm">
+                    <span className="text-2xl">🎵</span>
+                    <h3 className="font-bold text-sm">Music</h3>
+                    <p className="text-xs text-gray-500">Focus & flow.</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* Get in Touch Section */}
-            <div id="contact" className="mb-16 w-full text-left">
-              <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                Get in Touch
-              </h2>
-              <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
-                Have a project in mind or just want to say hi? Send me a message — I reply within 24 hours.
-              </p>
-              <ContactForm />
-              <div className="mt-6 flex flex-wrap gap-4 text-sm text-gray-400">
-                <a href="https://www.linkedin.com/in/dhanushkumar-amk/" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors underline underline-offset-4">LinkedIn</a>
-                <a href="mailto:dhanushkumaramk@gmail.com" className="hover:text-black dark:hover:text-white transition-colors underline underline-offset-4">dhanushkumaramk@gmail.com</a>
-                <a href="https://github.com/dhanushkumar-amk" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors underline underline-offset-4">GitHub</a>
+            <ScrollReveal>
+              <div id="contact" className="mb-16 w-full text-left">
+                <h2 className="mb-6 text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                  Get in Touch
+                </h2>
+                <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
+                  Have a project in mind or just want to say hi? Send me a message — I reply within 24 hours.
+                </p>
+                <ContactForm />
+                <div className="mt-6 flex flex-wrap gap-4 text-sm text-gray-400">
+                  <a href="https://www.linkedin.com/in/dhanushkumar-amk/" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors underline underline-offset-4">LinkedIn</a>
+                  <a href="mailto:dhanushkumaramk@gmail.com" className="hover:text-black dark:hover:text-white transition-colors underline underline-offset-4">dhanushkumaramk@gmail.com</a>
+                  <a href="https://github.com/dhanushkumar-amk" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors underline underline-offset-4">GitHub</a>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* Pomodoro Timer Section */}
             <PomodoroTimer />
@@ -685,7 +644,9 @@ export default function Home() {
           rel="noopener noreferrer"
           className="text-gray-500 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors hover:scale-110"
         >
-          <FaXTwitter className="h-5 w-5" />
+          <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden="true">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+          </svg>
         </a>
         <a
           href="https://leetcode.com/dhanushkumar-amk"
